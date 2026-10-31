@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Foz Destinos Tours e Transfers | Passeios Particulares em Foz do Iguaçu</title>
+<meta name="description" content="Passeios particulares com motorista exclusivo em Foz do Iguaçu. Feirinha de Puerto Iguazú, Cataratas, Itaipu, Paraguai e muito mais.">
+<style>
+:root{
+  --bg:#0B0B0B; --bg2:#141414; --bg3:#1c1c1c;
+  --text:#F5F5F5; --soft:#C4C4C4;
+  --gold:#FFD700;
+  --gold-grad:linear-gradient(135deg,#FFF3B0 0%,#FFD700 35%,#B8860B 70%,#FFE57F 100%);
+  --wa:#25D366; --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.container{width:min(1150px,92%);margin:0 auto}
+section{padding:70px 0}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{to{background-position:200% center}}
+@keyframes sweep{0%,55%{transform:translateX(-150%) skewX(-20deg)}100%{transform:translateX(330%) skewX(-20deg)}}
+
+.metal{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.metal-anim{background-size:200% auto;animation:shimmer 6s linear infinite}
+
+.title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;text-align:center;margin-bottom:12px}
+.subtitle{text-align:center;color:var(--soft);max-width:640px;margin:0 auto 40px}
+.empty{color:var(--soft);font-style:italic;padding:12px 0;text-align:center}
+
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border:0;border-radius:50px;background:var(--gold-grad);background-size:200% auto;color:#0B0B0B;font-weight:800;cursor:pointer;text-align:center;box-shadow:0 6px 20px rgba(255,215,0,.4);transition:transform .25s,box-shadow .25s,background-position .6s}
+.btn:active{transform:scale(0.98)}
+.btn:hover{transform:translateY(-3px);background-position:100% center;box-shadow:0 10px 28px rgba(255,215,0,.6)}
+.btn::after{content:"";position:absolute;top:0;left:0;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.8),transparent);transform:translateX(-150%) skewX(-20deg);animation:sweep 3.2s ease-in-out infinite;pointer-events:none}
+.btn-block{width:100%}
+.btn-outline{padding:9px 18px;border-radius:50px;border:2px solid #FFD700;background:transparent;color:var(--gold);font-size:.9rem;font-weight:700;cursor:pointer;transition:background .25s,color .25s}
+.btn-outline:hover{background:var(--gold);color:#0B0B0B}
+.btn-ghost{padding:10px 20px;border-radius:50px;border:1px solid #444;background:transparent;color:var(--soft);cursor:pointer}
+.btn-danger{padding:7px 12px;border-radius:50px;border:1px solid #ff6b6b;background:transparent;color:#ff6b6b;cursor:pointer;font-size:.8rem}
+.btn-danger:hover{background:#ff6b6b;color:#0B0B0B}
+
+.site-header{position:fixed;inset:0 0 auto 0;z-index:100;background:rgba(11,11,11,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,215,0,.25)}
+.flags-bar{display:flex;justify-content:center;gap:14px;padding:6px 0;background:#050505}
+.flags-bar img{width:30px;height:20px;border-radius:3px;box-shadow:0 0 0 1px rgba(255,215,0,.6)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{font-weight:900;font-size:1.25rem;letter-spacing:1px}
+.logo small{display:block;font-size:.6rem;letter-spacing:3px;font-weight:600}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{color:var(--soft);font-size:.95rem;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.menu-btn{display:none;background:none;border:0;color:var(--gold);font-size:1.9rem;cursor:pointer;padding:8px}
+
+.hero{position:relative;min-height:85vh;display:flex;align-items:center;text-align:center;padding:130px 0 60px;background:radial-gradient(circle at 50% 20%,rgba(255,215,0,.18),transparent 65%),var(--bg);overflow:hidden}
+.hero-media-bg{position:absolute;inset:0;z-index:0;opacity:.25;pointer-events:none}
+.hero-media-bg img,.hero-media-bg video{width:100%;height:100%;object-fit:cover}
+.hero .container{position:relative;z-index:1}
+.badge{display:inline-block;padding:6px 20px;border-radius:50px;background:var(--gold-grad);color:#0B0B0B;font-weight:800;font-size:.8rem;letter-spacing:1px;margin-bottom:20px;box-shadow:0 4px 15px rgba(255,215,0,.3)}
+.hero h1{font-size:clamp(2.2rem,6vw,4.2rem);font-weight:900;line-height:1.15;margin-bottom:20px}
+.lead{max-width:680px;margin:0 auto 38px;color:var(--soft);font-size:clamp(1.05rem,2.2vw,1.2rem)}
+
+/* BOTÃO PULSANTE NO CANTO ESQUERDO */
+.ride-trigger-float{position:fixed;left:20px;bottom:22px;z-index:200}
+.ride-trigger-btn{display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:50px;background:var(--gold-grad);color:#0B0B0B;font-weight:900;font-size:.9rem;border:0;cursor:pointer;box-shadow:0 0 25px rgba(255,215,0,.7);animation:triggerPulse 2s infinite}
+@keyframes triggerPulse{0%,100%{transform:scale(1);box-shadow:0 0 15px rgba(255,215,0,.5)}50%{transform:scale(1.07);box-shadow:0 0 30px rgba(255,215,0,.9)}}
+
+.ride-modal-overlay{position:fixed;inset:0;z-index:350;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.ride-modal-overlay.open{display:flex;animation:fadeIn .2s ease}
+.ride-modal-box{width:min(420px,100%);background:var(--bg2);border:2px solid var(--gold);border-radius:20px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.9);position:relative;max-height:90vh;overflow-y:auto}
+.ride-modal-box h3{font-size:1.2rem;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.ride-modal-box p{font-size:.82rem;color:var(--soft);margin-bottom:16px}
+.ride-modal-box .fg{margin-bottom:12px}
+.ride-modal-box label{display:block;font-size:.82rem;color:var(--soft);margin-bottom:4px;font-weight:600}
+.ride-modal-box input,.ride-modal-box select{width:100%;padding:10px 14px;background:#0B0B0B;border:1px solid #3a3a3a;border-radius:8px;color:var(--text);font-size:.9rem}
+.ride-modal-box input:focus,.ride-modal-box select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,215,0,.2)}
+.ride-modal-box .close-x{position:absolute;top:12px;right:16px;background:none;border:0;color:var(--gold);font-size:1.6rem;cursor:pointer}
+.reminder-tip-box{background:rgba(255,215,0,.06);border-left:3px solid var(--gold);padding:8px 10px;border-radius:0 6px 6px 0;font-size:.78rem;color:var(--gold);margin-bottom:14px}
+
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:50px;text-align:left}
+.feature-card{background:linear-gradient(145deg,rgba(28,28,28,.9),rgba(15,15,15,.9));border:1px solid rgba(255,215,0,.25);border-radius:var(--r);padding:22px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .3s,border-color .3s}
+.feature-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.feature-icon{font-size:1.8rem;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;flex-shrink:0}
+.feature-card h4{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:2px}
+.feature-card p{font-size:.82rem;color:var(--soft)}
+
+.tours{background:var(--bg);padding:70px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:30px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--bg3);border:1px solid rgba(255,215,0,.2);border-radius:var(--r);animation:fadeUp .5s ease backwards;transition:transform .3s,border-color .3s,box-shadow .3s;overflow:hidden}
+.card:hover{transform:translateY(-6px);border-color:rgba(255,215,0,.7);box-shadow:0 12px 40px rgba(0,0,0,.6)}
+
+.card.promo{border:2px solid var(--gold)}
+.card.promo::before{content:"";position:absolute;inset:-3px;border-radius:calc(var(--r) + 3px);background:var(--gold-grad);z-index:-1;opacity:.6;animation:neonGlow 1.8s ease-in-out infinite}
+@keyframes neonGlow{0%,100%{opacity:.3;filter:blur(6px)}50%{opacity:.9;filter:blur(12px)}}
+
+.media-carousel{position:relative;width:100%;height:220px;background:#151515;border-radius:var(--r) var(--r) 0 0;overflow:hidden;flex-shrink:0;touch-action:pan-y}
+.carousel-track{display:flex;width:100%;height:100%;transition:transform .4s ease-in-out}
+.carousel-item{min-width:100%;height:100%;position:relative;flex-shrink:0}
+.carousel-item img,.carousel-item video{width:100%;height:100%;object-fit:cover;display:block}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;color:var(--gold);font-size:.9rem}
+
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);color:var(--gold);border:1px solid rgba(255,215,0,.5);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:4;font-size:1rem;transition:background .2s}
+.carousel-btn:hover{background:rgba(0,0,0,.9)}
+.carousel-prev{left:8px}
+.carousel-next{right:8px}
+
+.carousel-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:4}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s,transform .2s}
+.dot.active{background:var(--gold);transform:scale(1.3)}
+
+.flag-chip{position:absolute;top:12px;left:12px;z-index:5;display:flex;align-items:center;gap:6px;padding:6px 14px 6px 8px;border-radius:50px;background:var(--gold-grad);color:#0B0B0B;font-weight:800;font-size:.82rem;box-shadow:0 4px 12px rgba(0,0,0,.4);pointer-events:none}
+.flag-chip img{width:22px;height:15px;border-radius:2px}
+.star{position:absolute;top:12px;right:12px;z-index:5;padding:7px 14px;border-radius:50px;background:#0B0B0B;border:2px solid var(--gold);color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:1px;box-shadow:0 0 15px rgba(255,215,0,.6);animation:badgePulse 1.3s ease-in-out infinite;pointer-events:none}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
+.body{display:flex;flex-direction:column;flex:1;padding:24px}
+.body h3{font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.body p{flex:1;color:var(--soft);font-size:.96rem;margin-bottom:14px}
+.note{flex:none!important;font-size:.84rem;color:var(--gold);border-left:3px solid var(--gold);padding-left:10px;margin-bottom:18px!important;background:rgba(255,215,0,.05);padding-top:4px;padding-bottom:4px;border-radius:0 6px 6px 0}
+.body .btn{width:100%}
+
+.vehicle{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.vehicle-media{position:relative;height:340px;border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,215,0,.35);background:linear-gradient(135deg,#222,#0b0b0b);box-shadow:0 0 45px rgba(255,215,0,.15)}
+.vehicle-media img,.vehicle-media video{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover}
+.checks{list-style:none;margin:24px 0 32px}
+.checks li{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);color:var(--soft);font-size:1.02rem}
+.checks li::before{content:"✦  ";color:var(--gold);font-weight:bold}
+.left{text-align:left}
+
+footer{background:#050505;border-top:1px solid rgba(255,215,0,.2);padding:45px 0;text-align:center;color:var(--soft);font-size:.9rem}
+footer .logo{display:inline-block;margin-bottom:10px}
+
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:200;display:flex;align-items:center;gap:14px}
+.wa-btn{position:relative;width:65px;height:65px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(37,211,102,.9);animation:waBounce 1.6s ease-in-out infinite}
+.wa-btn::before,.wa-btn::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--wa);animation:waRing 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;pointer-events:none}
+.wa-btn::after{animation-delay:.9s}
+.wa-btn svg{position:relative;z-index:1;width:36px;height:36px;fill:#fff}
+@keyframes waRing{0%{transform:scale(1);opacity:1}100%{transform:scale(2.4);opacity:0}}
+@keyframes waBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}70%{transform:translateY(-3px)}}
+
+.overlay{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.82);backdrop-filter:blur(6px)}
+.overlay.open{display:flex;animation:fadeIn .2s ease}
+.modal{position:relative;width:min(480px,100%);max-height:90vh;overflow-y:auto;background:var(--bg2);border:1px solid rgba(255,215,0,.4);border-radius:var(--r);padding:24px;box-shadow:0 25px 70px rgba(0,0,0,.8)}
+.modal::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--r) var(--r) 0 0;background:var(--gold-grad)}
+.modal.wide{width:min(1100px,100%)}
+.modal h2{font-size:1.4rem;margin-bottom:16px}
+.x{position:absolute;top:10px;right:16px;background:none;border:0;color:var(--gold);font-size:1.8rem;cursor:pointer;padding:8px}
+.hint{color:var(--soft);font-size:.92rem;margin-bottom:16px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:.88rem;color:var(--soft);margin-bottom:6px;font-weight:600}
+.fg input:not([type=checkbox]),.fg select,.fg textarea{width:100%;padding:12px 16px;background:#0B0B0B;border:1px solid #3a3a3a;border-radius:10px;color:var(--text);font-size:.95rem}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,215,0,.2)}
+.fg textarea{min-height:90px;resize:vertical}
+.check{display:flex;align-items:center;gap:12px;background:rgba(255,215,0,.04);padding:12px 16px;border-radius:10px;border:1px solid rgba(255,215,0,.2)}
+.check input{width:22px;height:22px;accent-color:#FFD700;cursor:pointer}
+.check label{margin:0;color:var(--text);font-weight:700;cursor:pointer}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.err{color:#ff6b6b;font-size:.9rem;min-height:1.2em;margin-bottom:10px}
+.ok{color:#7CFC98;font-size:.92rem;min-height:1.2em;margin-top:10px}
+.actions{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;margin-top:20px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:20px;border-bottom:1px solid #2a2a2a;-webkit-overflow-scrolling:touch}
+.tab{padding:8px 16px;border-radius:50px;border:1px solid #333;background:#0B0B0B;color:var(--soft);cursor:pointer;font-weight:600;white-space:nowrap;font-size:.88rem}
+.tab.active{background:var(--gold-grad);color:#0B0B0B;border-color:transparent;font-weight:800}
+.grid2{display:grid;grid-template-columns:1fr 1.3fr;gap:26px}
+.panel{background:var(--bg3);border:1px solid #2a2a2a;border-radius:14px;padding:18px}
+.panel h3{margin-bottom:14px;font-size:1.1rem;color:var(--gold)}
+.list{list-style:none;max-height:400px;overflow-y:auto;padding-right:4px}
+.list li{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid #2a2a2a;font-size:.92rem}
+.list small{color:var(--soft)}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:8px;border-bottom:1px solid #2a2a2a;vertical-align:middle}
+th{color:var(--gold)}
+.low{color:#ff6b6b;font-weight:700}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:400;max-width:90%;padding:12px 22px;border-radius:50px;background:var(--gold-grad);color:#0B0B0B;font-weight:900;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 10px 30px rgba(0,0,0,.7);font-size:.88rem}
+.toast.show{opacity:1}
+
+@media(max-width:900px){
+  .vehicle,.grid2{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  section{padding:45px 0}
+  .menu-btn{display:block}
+  .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;display:none;background:rgba(11,11,11,.98);border-bottom:1px solid rgba(255,215,0,.25);box-shadow:0 15px 30px rgba(0,0,0,.8)}
+  .nav-links.open{display:flex}
+  .nav-links li{width:100%}
+  .nav-links a,.nav-links .btn-outline{display:block;width:100%;padding:16px 6%;text-align:left;border:0;border-radius:0}
+  .hero{padding-top:110px;min-height:auto}
+  .wa-float{right:16px;bottom:16px}
+  .wa-btn{width:58px;height:58px}
+  .wa-btn svg{width:32px;height:32px}
+  .ride-trigger-float{left:12px;bottom:12px}
+  .row2{grid-template-columns:1fr}
+  .modal{padding:18px;max-height:85vh}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="flags-bar" aria-label="Passeios para Brasil, Paraguai e Argentina">
+    <img src="https://flagcdn.com/w40/br.png" width="30" height="20" alt="Bandeira do Brasil">
+    <img src="https://flagcdn.com/w40/py.png" width="30" height="20" alt="Bandeira do Paraguai">
+    <img src="https://flagcdn.com/w40/ar.png" width="30" height="20" alt="Bandeira da Argentina">
+  </div>
+  <nav class="container nav" aria-label="Navegação principal">
+    <a class="logo metal" href="#inicio">FOZ DESTINOS<small>TOURS &amp; TRANSFERS</small></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#roteiros">Roteiros</a></li>
+      <li><a href="#veiculo">Veículo</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><button class="btn-outline" id="openAdmin">Área do Administrador</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="hero-media-bg" id="heroMediaBg"></div>
+    <div class="container">
+      <span class="badge" id="heroBadge"></span>
+      <h1 class="metal metal-anim" id="heroTitle"></h1>
+      <p class="lead" id="heroSub"></p>
+      <a class="btn" id="heroCta" data-wa target="_blank" rel="noopener"></a>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✦</div>
+          <div>
+            <h4>Passeio Particular</h4>
+            <p>Exclusividade total para você e seu grupo.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <div>
+            <h4>Motorista Exclusivo</h4>
+            <p>Atendimento VIP do início ao fim do roteiro.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚗</div>
+          <div>
+            <h4>Carro Confortável</h4>
+            <p>Volkswagen Virtus Highline espaçoso e higienizado.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">❄️</div>
+          <div>
+            <h4>Ar-Condicionado</h4>
+            <p>Climatização perfeita para o seu bem-estar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tours" id="roteiros">
+    <div class="container">
+      <h2 class="title metal">Roteiros em Destaque</h2>
+      <p class="subtitle">Escolha a experiência ideal e fale conosco para montar o seu dia perfeito na Tríplice Fronteira.</p>
+      <div class="grid" id="toursGrid"></div>
+    </div>
+  </section>
+
+  <section id="veiculo">
+    <div class="container vehicle">
+      <div class="vehicle-media" id="vehicleMediaContainer">
+        <span class="ph">Foto/Vídeo do veículo</span>
+      </div>
+      <div>
+        <h2 class="title metal left" id="vehicleTitle"></h2>
+        <p class="subtitle left" id="vehicleText" style="margin-bottom:24px"></p>
+        <ul class="checks">
+          <li>Carro grande e confortável (Volkswagen Virtus Highline Preto)</li>
+          <li>Passeio particular, sem outros passageiros</li>
+          <li>Motorista particular à sua disposição</li>
+          <li>Ar-condicionado de alta potência</li>
+        </ul>
+        <a class="btn" data-wa target="_blank" rel="noopener">Reservar meu passeio agora</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contato">
+  <div class="container">
+    <div class="logo metal">FOZ DESTINOS TOURS E TRANSFERS</div>
+    <p>Passeios particulares com motorista exclusivo em Foz do Iguaçu</p>
+    <p style="margin-top:10px">© <span id="year"></span> Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- BOTÃO PULSANTE NO CANTO ESQUERDO -->
+<div class="ride-trigger-float">
+  <button class="ride-trigger-btn" id="openRideModal">
+    <span>📍 Aperte aqui</span>
+  </button>
+</div>
+
+<!-- MODAL DE PEDIDO DE CORRIDA -->
+<div class="ride-modal-overlay" id="rideModalOverlay" role="dialog" aria-modal="true">
+  <div class="ride-modal-box">
+    <button class="close-x" id="closeRideModal" aria-label="Fechar">&times;</button>
+    <h3>🚗 Solicitar Transfer / Corrida</h3>
+    <p>Preencha os dados abaixo e envie direto para o nosso WhatsApp:</p>
+
+    <div class="reminder-tip-box">
+      🔔 <b>Lembrete:</b> <i>"Avise alguns minutos antes para que eu possa me programar."</i>
+    </div>
+
+    <form id="rideFormModal" novalidate>
+      <div class="fg">
+        <label for="mName">Seu Nome</label>
+        <input type="text" id="mName" placeholder="Ex: Maria Silva" required>
+      </div>
+      <div class="fg">
+        <label for="mPickup">Onde te busco? (Hotel / Endereço)</label>
+        <input type="text" id="mPickup" placeholder="Ex: Hotel Recanto Cataratas" required>
+      </div>
+      <div class="fg">
+        <label for="mDropoff">Qual o Destino?</label>
+        <input type="text" id="mDropoff" placeholder="Ex: Feirinha de Puerto Iguazú" required>
+      </div>
+      <div class="row2">
+        <div class="fg">
+          <label for="mTime">Horário</label>
+          <input type="time" id="mTime" required>
+        </div>
+        <div class="fg">
+          <label for="mPass">Passageiros</label>
+          <select id="mPass">
+            <option value="1 a 2 pessoas">1 a 2 pessoas</option>
+            <option value="3 a 4 pessoas">3 a 4 pessoas</option>
+            <option value="Mais de 4 pessoas">Mais de 4 pessoas</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-block" style="margin-top:8px">Enviar Pedido no WhatsApp</button>
+    </form>
+  </div>
+</div>
+
+<!-- BOTÃO DO WHATSAPP NO CANTO INFERIOR DIREITO -->
+<div class="wa-float">
+  <a class="wa-btn" data-wa target="_blank" rel="noopener" aria-label="Falar com a Foz Destinos no WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.13c-.25.7-1.45 1.33-2 1.41-.52.07-1.19.1-1.92-.12a17.7 17.7 0 0 1-1.74-.64c-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17 0-1.51.8-2.25 1.08-2.56.28-.31.61-.38.81-.38h.58c.19 0 .44-.07.69.53.25.61.85 2.1.93 2.25.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.31.4-.45.54-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.07 1.31 2.36 1.46.3.15.47.12.64-.07.18-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.08.12.08.72-.17 1.42z"/></svg>
+  </a>
+</div>
+
+<!-- Modal de Login -->
+<div class="overlay" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal">
+    <button class="x" id="authX" data-close aria-label="Fechar">&times;</button>
+    <h2 class="metal" id="authTitle">Acesso do Administrador</h2>
+    <div class="auth-view" id="view-login">
+      <form id="loginForm" novalidate>
+        <div class="fg"><label for="lUser">Usuário ou e-mail</label><input id="lUser" autocomplete="username"></div>
+        <div class="fg"><label for="lPass">Senha</label><input id="lPass" type="password" autocomplete="current-password"></div>
+        <p class="err" id="loginErr"></p>
+        <div class="actions">
+          <button type="button" class="btn-ghost" data-close>Cancelar</button>
+          <button class="btn">Entrar no Painel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Painel do Administrador -->
+<div class="overlay" id="dashModal" role="dialog" aria-modal="true" aria-labelledby="dashTitle">
+  <div class="modal wide">
+    <button class="x" data-close aria-label="Fechar">&times;</button>
+    <h2 class="metal" id="dashTitle">Painel do Administrador</h2>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="home">Capa do site</button>
+      <button class="tab" data-tab="tours">Passeios</button>
+      <button class="tab" data-tab="tickets">Ingressos</button>
+      <button class="tab" data-tab="account">Minha conta</button>
+      <button class="btn-outline" id="logoutBtn" style="margin-left:auto">Sair</button>
+    </div>
+
+    <!-- Guia Capa do Site -->
+    <div class="pane" id="pane-home">
+      <div class="grid2">
+        <div class="panel">
+          <h3>Editar a capa e mídias</h3>
+          <p class="hint">Altere os textos, fotos e vídeos da apresentação do site.</p>
+          <form id="homeForm" novalidate>
+            <div class="fg"><label for="hBadge">Selo (texto pequeno no topo)</label><input id="hBadge" maxlength="60"></div>
+            <div class="fg"><label for="hTitle">Título principal</label><input id="hTitle" maxlength="120"></div>
+            <div class="fg"><label for="hSub">Texto de apresentação</label><textarea id="hSub" maxlength="300"></textarea></div>
+            <div class="fg"><label for="hCta">Texto do botão principal</label><input id="hCta" maxlength="50"></div>
+            
+            <hr style="border-color:#2a2a2a;margin:20px 0">
+            <h4 style="color:var(--gold);margin-bottom:12px">Mídia de fundo do Topo (Hero)</h4>
+            <div class="fg">
+              <label for="hMedia">Link da foto/vídeo do Topo</label>
+              <input id="hMedia" placeholder="https://exemplo.com/foto.jpg">
+            </div>
+
+            <hr style="border-color:#2a2a2a;margin:20px 0">
+            <h4 style="color:var(--gold);margin-bottom:12px">Seção do Veículo</h4>
+            <div class="fg"><label for="vTitle">Título do Veículo</label><input id="vTitle" maxlength="80"></div>
+            <div class="fg"><label for="vText">Texto do Veículo</label><textarea id="vText" maxlength="300"></textarea></div>
+            <div class="fg">
+              <label for="vMedia">Link da foto/vídeo do Veículo</label>
+              <input id="vMedia" placeholder="https://exemplo.com/carro.jpg">
+            </div>
+
+            <p class="err" id="homeErr"></p>
+            <button class="btn btn-block">Salvar Capa e Mídias</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Dicas de Personalização</h3>
+          <ul class="list">
+            <li>Insira links diretos de imagens (terminados em .jpg, .png ou .mp4).</li>
+            <li>No campo de passeios, você pode definir a ordem exata em que cada card aparece no site usando o campo "Posição no site".</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guia Passeios -->
+    <div class="pane" id="pane-tours" hidden>
+      <div class="grid2">
+        <div class="panel">
+          <h3 id="tourFormTitle">Adicionar passeio</h3>
+          <form id="tourForm" novalidate>
+            <input type="hidden" id="tId">
+            <div class="fg"><label for="tTitle">Título do Passeio</label><input id="tTitle" maxlength="90"></div>
+            <div class="row2">
+              <div class="fg">
+                <label for="tFlag">País / Bandeira</label>
+                <select id="tFlag">
+                  <option value="br">Brasil</option>
+                  <option value="py">Paraguai</option>
+                  <option value="ar">Argentina</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label for="tOrder" style="color:var(--gold)">Posição no site (Ordem)</label>
+                <input id="tOrder" type="number" min="1" step="1" placeholder="Ex: 1 para ficar em 1º">
+              </div>
+            </div>
+            
+            <div class="fg">
+              <label for="tMediaList">Links das fotos/vídeos (um por linha ou separados por vírgula)</label>
+              <textarea id="tMediaList" placeholder="https://link1.jpg&#10;https://link2.jpg&#10;https://linkvideo.mp4" style="min-height:110px"></textarea>
+              <small style="color:var(--soft);display:block;margin-top:4px">Pode colocar vários links (pode dar Enter entre eles). O carrossel passará automaticamente a cada 4s.</small>
+            </div>
+
+            <div class="fg"><label for="tDesc">Descrição (legenda de venda persuasiva)</label><textarea id="tDesc" maxlength="400"></textarea></div>
+            <div class="fg"><label for="tNote">Nota informativa (opcional)</label><input id="tNote" maxlength="140" placeholder="Ex.: Leve documento com foto"></div>
+            <div class="fg check"><input type="checkbox" id="tPromo"><label for="tPromo">Colocar em Destaque / Promoção</label></div>
+            <p class="err" id="tourErr"></p>
+            <div class="actions">
+              <button type="button" class="btn-ghost" id="tCancel" hidden>Cancelar edição</button>
+              <button class="btn" id="tourSubmit">Salvar passeio</button>
+            </div>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Passeios cadastrados (Ordenados)</h3>
+          <ul class="list" id="adminTours"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guia Ingressos -->
+    <div class="pane" id="pane-tickets" hidden>
+      <div class="grid2">
+        <div class="panel">
+          <h3 id="ticketFormTitle">Cadastrar ingresso</h3>
+          <form id="ticketForm" novalidate>
+            <input type="hidden" id="tiId">
+            <div class="fg"><label for="tiName">Nome do ingresso / atração</label><input id="tiName" maxlength="90"></div>
+            <div class="row2">
+              <div class="fg"><label for="tiPrice">Preço (R$)</label><input id="tiPrice" type="number" min="0" step="0.01"></div>
+              <div class="fg"><label for="tiStock">Quantidade disponível</label><input id="tiStock" type="number" min="0" step="1"></div>
+            </div>
+            <p class="err" id="ticketErr"></p>
+            <div class="actions">
+              <button type="button" class="btn-ghost" id="tiCancel" hidden>Cancelar edição</button>
+              <button class="btn">Salvar ingresso</button>
+            </div>
+          </form>
+
+          <h3 style="margin-top:26px">Registrar venda</h3>
+          <form id="saleForm" novalidate>
+            <div class="fg"><label for="sTicket">Ingresso</label><select id="sTicket"></select></div>
+            <div class="fg"><label for="sClient">Nome do cliente</label><input id="sClient" maxlength="90"></div>
+            <div class="fg"><label for="sQty">Quantidade</label><input id="sQty" type="number" min="1" step="1" value="1"></div>
+            <p class="err" id="saleErr"></p>
+            <button class="btn btn-block">Marcar venda</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Estoque</h3>
+          <div class="wrap">
+            <table>
+              <thead><tr><th>Ingresso</th><th>Preço</th><th>Disp.</th><th></th></tr></thead>
+              <tbody id="ticketTable"></tbody>
+            </table>
+          </div>
+          <h3 style="margin-top:24px">Vendas realizadas</h3>
+          <div class="wrap">
+            <table>
+              <thead><tr><th>Data</th><th>Cliente</th><th>Ingresso</th><th>Qtd</th><th>Total</th></tr></thead>
+              <tbody id="salesTable"></tbody>
+            </table>
+          </div>
+          <p class="empty" id="salesEmpty">Nenhuma venda registrada ainda.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guia Minha Conta -->
+    <div class="pane" id="pane-account" hidden>
+      <div class="grid2">
+        <div class="panel">
+          <h3>Alterar usuário e senha</h3>
+          <form id="accUserForm" novalidate>
+            <div class="fg"><label for="accNewUser">Novo usuário ou e-mail</label><input id="accNewUser" maxlength="80"></div>
+            <div class="fg"><label for="accNewPass">Nova senha (mínimo 6 caracteres)</label><input id="accNewPass" type="password" autocomplete="new-password"></div>
+            <div class="fg"><label for="accUserPass">Senha atual (para confirmar)</label><input id="accUserPass" type="password" autocomplete="current-password"></div>
+            <p class="err" id="accUserErr"></p>
+            <button class="btn btn-block">Atualizar dados de acesso</button>
+            <p class="ok" id="accUserOk"></p>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Informações da Conta</h3>
+          <p class="hint">Painel de controle exclusivo do administrador. Controle total em tempo real.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmação -->
+<div class="overlay" id="confirmModal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="modal">
+    <h2 id="confirmTitle">Confirmar exclusão</h2>
+    <p id="confirmText" class="hint" style="margin-bottom:22px"></p>
+    <div class="actions">
+      <button class="btn-ghost" id="confirmCancel">Cancelar</button>
+      <button class="btn-danger" id="confirmOk">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const WA_NUMBER = '5545988124101'; 
+  const WA_MESSAGE = 'Olá! Tudo bem? Quero saber mais sobre os passeios.🇧🇷🇵🇾🇦🇷';
+  const FLAG_NAMES = { br: 'Brasil', py: 'Paraguai', ar: 'Argentina' };
+  const KEYS = {
+    home: 'fdt_home', tours: 'fdt_tours', tickets: 'fdt_tickets',
+    sales: 'fdt_sales', admin: 'fdt_admin', session: 'fdt_session'
+  };
+
+  const DEFAULT_HOME = {
+    heroBadge: 'MOTORISTA PARTICULAR EXCLUSIVO',
+    heroTitle: 'Conheça Foz do Iguaçu com exclusividade, conforto e privacidade',
+    heroSub: 'Passeios particulares feitos sob medida para você e sua família, com um motorista só seu e roteiros pensados para aproveitar cada momento.',
+    heroCta: 'Solicitar orçamento no WhatsApp',
+    heroMedia: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80',
+    vehicleTitle: 'Viaje com conforto de verdade',
+    vehicleText: 'Um carro grande e confortável, pensado para você relaxar do início ao fim.',
+    vehicleMedia: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=800&q=80'
+  };
+
+  const DEFAULT_TOURS = [
+    { id: 't1', flag: 'ar', order: 1, promo: false, createdAt: 1,
+      title: 'Feirinha de Puerto Iguazú',
+      desc: 'Sinta os sabores da Argentina! Uma noite inesquecível de degustação de vinhos, queijos nobres, alfajores e empanadas no melhor ambiente da fronteira.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80'
+      ], note: 'Leve documento com foto para atravessar a fronteira.' },
+    { id: 't2', flag: 'br', order: 2, promo: false, createdAt: 2,
+      title: 'Cataratas do Iguaçu',
+      desc: 'Viva a força de uma das 7 Maravilhas Naturais do Mundo com total conforto e sem preocupação com estacionamento.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1432405972618-c60b0225b8f6?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'
+      ], note: '' },
+    { id: 't3', flag: 'br', order: 3, promo: false, createdAt: 3,
+      title: 'Parque das Aves',
+      desc: 'Imersão total na Mata Atlântica com centenas de espécies resgatadas. Um passeio imperdível para toda a família.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?auto=format&fit=crop&w=800&q=80'
+      ], note: '' },
+    { id: 't4', flag: 'py', order: 4, promo: false, createdAt: 4,
+      title: 'Compras no Paraguai (Ciudad del Este)',
+      desc: 'Faça as suas compras no Paraguai com segurança, comodidade e roteiro direto para as melhores lojas oficiais.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=800&q=80'
+      ], note: 'Leve documento com foto.' },
+    { id: 't5', flag: 'br', order: 5, promo: false, createdAt: 5,
+      title: 'Usina Hidrelétrica de Itaipu',
+      desc: 'Surpreenda-se com a grandeza de uma das maiores obras de engenharia do planeta.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80'
+      ], note: '' },
+    { id: 't6', flag: 'br', order: 6, promo: false, createdAt: 6,
+      title: 'Templo Budista Chen Tien',
+      desc: 'Paz, contemplação e uma vista panorâmica incrível do Rio Paraná.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1528164344705-475426879c0d?auto=format&fit=crop&w=800&q=80'
+      ], note: '' },
+    { id: 't7', flag: 'br', order: 7, promo: false, createdAt: 7,
+      title: 'Marco das Três Fronteiras',
+      desc: 'O encontro de três países num só lugar, com show cultural e pôr do sol inesquecível.',
+      mediaList: [
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
+      ], note: '' }
+  ];
+
+  const FIXED_ADMIN = { user: 'maicom', pass: 'maicom45' };
+
+  function loadData(key, def) {
+    try {
+      const val = localStorage.getItem(key);
+      if (val !== null) {
+        const parsed = JSON.parse(val);
+        if (key === KEYS.tours) {
+          return parsed.map(t => {
+            if (!t.mediaList || !Array.isArray(t.mediaList) || t.mediaList.length === 0) {
+              t.mediaList = t.media ? [t.media] : ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'];
+            }
+            return t;
+          });
+        }
+        return parsed;
+      }
+      return def;
+    } catch {
+      return def;
+    }
+  }
+
+  function saveData(key, val) {
+    try {
+      localStorage.setItem(key, JSON.stringify(val));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  let state = {
+    home: loadData(KEYS.home, DEFAULT_HOME),
+    tours: loadData(KEYS.tours, DEFAULT_TOURS),
+    tickets: loadData(KEYS.tickets, []),
+    sales: loadData(KEYS.sales, []),
+    admin: FIXED_ADMIN,
+    session: loadData(KEYS.session, false)
+  };
+  saveData(KEYS.admin, FIXED_ADMIN);
+
+  const $ = id => document.getElementById(id);
+  const esc = s => { const d = document.createElement('div'); d.textContent = String(s ?? ''); return d.innerHTML; };
+  const waUrl = extra => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE + (extra ? '\n\n*Passeio de interesse:* ' + extra : ''))}`;
+
+  function toast(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  function isVideoUrl(url) {
+    if (!url) return false;
+    return url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('video') || url.startsWith('data:video/');
+  }
+
+  function getSortedTours() {
+    return [...state.tours].sort((a, b) => {
+      const orderA = Number(a.order) || 999;
+      const orderB = Number(b.order) || 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.createdAt - b.createdAt;
+    });
+  }
+
+  function renderSite() {
+    const h = state.home;
+    $('heroBadge').textContent = h.heroBadge;
+    $('heroTitle').textContent = h.heroTitle;
+    $('heroSub').textContent = h.heroSub;
+    $('heroCta').textContent = h.heroCta;
+    $('vehicleTitle').textContent = h.vehicleTitle;
+    $('vehicleText').textContent = h.vehicleText;
+    $('year').textContent = new Date().getFullYear();
+
+    const heroBgContainer = $('heroMediaBg');
+    heroBgContainer.innerHTML = '';
+    if (h.heroMedia) {
+      if (isVideoUrl(h.heroMedia)) {
+        heroBgContainer.innerHTML = `<video src="${esc(h.heroMedia)}" autoplay muted loop playsinline></video>`;
+      } else {
+        heroBgContainer.innerHTML = `<img src="${esc(h.heroMedia)}" alt="Fundo">`;
+      }
+    }
+
+    const vehContainer = $('vehicleMediaContainer');
+    vehContainer.innerHTML = '<span class="ph">Foto/Vídeo do veículo</span>';
+    if (h.vehicleMedia) {
+      if (isVideoUrl(h.vehicleMedia)) {
+        vehContainer.innerHTML = `<video src="${esc(h.vehicleMedia)}" autoplay muted loop playsinline></video>`;
+      } else {
+        vehContainer.innerHTML = `<img src="${esc(h.vehicleMedia)}" alt="Veículo" loading="lazy" onerror="this.remove()">`;
+      }
+    }
+
+    document.querySelectorAll('[data-wa]').forEach(el => {
+      el.href = waUrl();
+    });
+
+    const sorted = getSortedTours();
+    const grid = $('toursGrid');
+    grid.innerHTML = '';
+
+    if (sorted.length === 0) {
+      grid.innerHTML = '<p class="empty">Nenhum passeio cadastrado no momento.</p>';
+      return;
+    }
+
+    sorted.forEach((t, idx) => {
+      const card = document.createElement('article');
+      card.className = `card ${t.promo ? 'promo' : ''}`;
+      card.style.animationDelay = `${idx * 0.05}s`;
+
+      const flagName = FLAG_NAMES[t.flag] || 'Destino';
+      const list = t.mediaList && t.mediaList.length > 0 ? t.mediaList : ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'];
+
+      let itemsHtml = '';
+      let dotsHtml = '';
+
+      list.forEach((m, mIdx) => {
+        const isVid = isVideoUrl(m);
+        itemsHtml += `<div class="carousel-item">${isVid ? `<video src="${esc(m)}" autoplay muted loop playsinline></video>` : `<img src="${esc(m)}" alt="${esc(t.title)}" loading="lazy">`}</div>`;
+        dotsHtml += `<span class="dot ${mIdx === 0 ? 'active' : ''}" data-index="${mIdx}"></span>`;
+      });
+
+      const mediaHtml = `
+        <div class="media-carousel" data-tour-id="${t.id}">
+          <div class="carousel-track">${itemsHtml}</div>
+          ${list.length > 1 ? `
+            <button class="carousel-btn carousel-prev" aria-label="Anterior">❮</button>
+            <button class="carousel-btn carousel-next" aria-label="Próxima">❯</button>
+            <div class="carousel-dots">${dotsHtml}</div>
+          ` : ''}
+        </div>
+      `;
+
+      card.innerHTML = `
+        <div style="position:relative">
+          <div class="flag-chip"><img src="https://flagcdn.com/w40/${t.flag}.png" alt="${flagName}"> ${flagName}</div>
+          ${t.promo ? '<div class="star">★ DESTAQUE</div>' : ''}
+          ${mediaHtml}
+        </div>
+        <div class="body">
+          <h3>${esc(t.title)}</h3>
+          <p>${esc(t.desc)}</p>
+          ${t.note ? `<div class="note">ℹ️ ${esc(t.note)}</div>` : ''}
+          <a class="btn" href="${waUrl(t.title)}" target="_blank" rel="noopener">Quero este passeio</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    initCarousels();
+  }
+
+  function initCarousels() {
+    document.querySelectorAll('.media-carousel').forEach(carousel => {
+      const track = carousel.querySelector('.carousel-track');
+      const items = carousel.querySelectorAll('.carousel-item');
+      const dots = carousel.querySelectorAll('.dot');
+      const prevBtn = carousel.querySelector('.carousel-prev');
+      const nextBtn = carousel.querySelector('.carousel-next');
+      
+      if (items.length <= 1) return;
+
+      let currentIndex = 0;
+      let timer = null;
+
+      function goTo(index) {
+        if (index < 0) index = items.length - 1;
+        if (index >= items.length) index = 0;
+        currentIndex = index;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        timer = setInterval(() => {
+          goTo(currentIndex + 1);
+        }, 4000);
+      }
+
+      function stopAutoplay() {
+        if (timer) clearInterval(timer);
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', e => {
+          e.preventDefault();
+          goTo(currentIndex - 1);
+          startAutoplay();
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', e => {
+          e.preventDefault();
+          goTo(currentIndex + 1);
+          startAutoplay();
+        });
+      }
+
+      dots.forEach((dot, dIdx) => {
+        dot.addEventListener('click', e => {
+          e.preventDefault();
+          goTo(dIdx);
+          startAutoplay();
+        });
+      });
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      carousel.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoplay();
+      }, {passive: true});
+
+      carousel.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 40) goTo(currentIndex + 1);
+        if (touchEndX > touchStartX + 40) goTo(currentIndex - 1);
+        startAutoplay();
+      }, {passive: true});
+
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', startAutoplay);
+
+      startAutoplay();
+    });
+  }
+
+  const rideModal = $('rideModalOverlay');
+  $('openRideModal').addEventListener('click', () => rideModal.classList.add('open'));
+  $('closeRideModal').addEventListener('click', () => rideModal.classList.remove('open'));
+  rideModal.addEventListener('click', e => {
+    if (e.target === rideModal) rideModal.classList.remove('open');
+  });
+
+  $('rideFormModal').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = $('mName').value.trim();
+    const pickup = $('mPickup').value.trim();
+    const dropoff = $('mDropoff').value.trim();
+    const time = $('mTime').value;
+    const pass = $('mPass').value;
+
+    if (!name || !pickup || !dropoff || !time) {
+      toast('Preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    const wazeLink = `https://waze.com/ul?q=${encodeURIComponent(pickup)}`;
+
+    const text = `🚕 *NOVA SOLICITAÇÃO DE CORRIDA / TRANSFER*\n\n` +
+                 `👤 *Cliente:* ${name}\n` +
+                 `📍 *Local de Embarque:* ${pickup}\n` +
+                 `🏁 *Destino:* ${dropoff}\n` +
+                 `⏰ *Horário:* ${time}\n` +
+                 `👥 *Passageiros:* ${pass}\n\n` +
+                 `🔔 *Lembrete:* Avise alguns minutos antes para que eu possa me programar.\n\n` +
+                 `🗺️ *Navegar pelo Waze até o Embarque:* ${wazeLink}`;
+
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+    rideModal.classList.remove('open');
+  });
+
+  function renderAdminTours() {
+    const list = $('adminTours');
+    list.innerHTML = '';
+
+    const sorted = getSortedTours();
+
+    if (sorted.length === 0) {
+      list.innerHTML = '<p class="empty">Nenhum passeio cadastrado.</p>';
+      return;
+    }
+
+    sorted.forEach(t => {
+      const count = t.mediaList ? t.mediaList.length : 1;
+      const posText = t.order ? `Posição nº ${t.order}` : 'Sem posição';
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div>
+          <strong>${esc(t.title)}</strong><br>
+          <small><b style="color:var(--gold)">[${posText}]</b> | País: ${t.flag.toUpperCase()} | Fotos: ${count} ${t.promo ? '| ⭐ Destacado' : ''}</small>
+        </div>
+        <div class="btns">
+          <button class="btn-outline btn-sm" data-act="promo" data-id="${t.id}">${t.promo ? 'Remover Destaque' : 'Destacar'}</button>
+          <button class="btn-outline btn-sm" data-act="edit" data-id="${t.id}">Editar</button>
+          <button class="btn-danger" data-act="del" data-id="${t.id}">Excluir</button>
+        </div>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  function deleteTour(id) {
+    state.tours = state.tours.filter(t => String(t.id) !== String(id));
+    saveData(KEYS.tours, state.tours);
+    renderAdminTours();
+    renderSite();
+    toast('Passeio excluído com sucesso!');
+  }
+
+  function togglePromo(id) {
+    const t = state.tours.find(x => String(x.id) === String(id));
+    if (t) {
+      t.promo = !t.promo;
+      saveData(KEYS.tours, state.tours);
+      renderAdminTours();
+      renderSite();
+      toast(t.promo ? 'Passeio adicionado aos Destaques!' : 'Destaque removido.');
+    }
+  }
+
+  function editTour(id) {
+    const t = state.tours.find(x => String(x.id) === String(id));
+    if (!t) return;
+    $('tId').value = t.id;
+    $('tTitle').value = t.title;
+    $('tFlag').value = t.flag;
+    $('tOrder').value = t.order || 1;
+    $('tMediaList').value = t.mediaList ? t.mediaList.join('\n') : '';
+    $('tDesc').value = t.desc || '';
+    $('tNote').value = t.note || '';
+    $('tPromo').checked = !!t.promo;
+    $('tourFormTitle').textContent = 'Editar passeio';
+    $('tCancel').hidden = false;
+    $('tourSubmit').textContent = 'Atualizar passeio';
+    $('tTitle').focus();
+  }
+
+  function resetTourForm() {
+    $('tourForm').reset();
+    $('tId').value = '';
+    $('tourFormTitle').textContent = 'Adicionar passeio';
+    $('tCancel').hidden = true;
+    $('tourSubmit').textContent = 'Salvar passeio';
+    $('tourErr').textContent = '';
+  }
+
+  $('tourForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const id = $('tId').value;
+    const title = $('tTitle').value.trim();
+    const flag = $('tFlag').value;
+    const order = parseInt($('tOrder').value) || (state.tours.length + 1);
+    const mediaRaw = $('tMediaList').value.trim();
+    const desc = $('tDesc').value.trim();
+    const note = $('tNote').value.trim();
+    const promo = $('tPromo').checked;
+
+    if (!title || !desc) {
+      $('tourErr').textContent = 'Preencha o título e a descrição do passeio.';
+      return;
+    }
+    $('tourErr').textContent = '';
+
+    const mediaList = mediaRaw ? mediaRaw.split(/[\n,]+/).map(s => s.trim()).filter(Boolean) : ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'];
+
+    if (id) {
+      const t = state.tours.find(x => String(x.id) === String(id));
+      if (t) {
+        t.title = title; t.flag = flag; t.order = order;
+        t.mediaList = mediaList; t.desc = desc; t.note = note; t.promo = promo;
+      }
+      toast('Passeio atualizado!');
+    } else {
+      const newT = {
+        id: 't_' + Date.now(),
+        title, flag, order, mediaList, desc, note, promo,
+        createdAt: Date.now()
+      };
+      state.tours.push(newT);
+      toast('Novo passeio adicionado!');
+    }
+
+    saveData(KEYS.tours, state.tours);
+    resetTourForm();
+    renderAdminTours();
+    renderSite();
+  });
+
+  $('tCancel').addEventListener('click', resetTourForm);
+
+  $('adminTours').addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const act = btn.dataset.act;
+    if (act === 'del') {
+      openConfirm('Tem certeza que deseja excluir este passeio?', () => deleteTour(id));
+    } else if (act === 'promo') {
+      togglePromo(id);
+    } else if (act === 'edit') {
+      editTour(id);
+    }
+  });
+
+  function renderTickets() {
+    const tBody = $('ticketTable');
+    const sSelect = $('sTicket');
+    tBody.innerHTML = '';
+    sSelect.innerHTML = '';
+
+    if (state.tickets.length === 0) {
+      tBody.innerHTML = '<tr><td colspan="4" class="empty">Nenhum ingresso cadastrado.</td></tr>';
+      sSelect.innerHTML = '<option value="">Cadastre um ingresso primeiro</option>';
+      return;
+    }
+
+    state.tickets.forEach(ti => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><b>${esc(ti.name)}</b></td>
+        <td>R$ ${Number(ti.price).toFixed(2)}</td>
+        <td class="${ti.stock <= 2 ? 'low' : ''}">${ti.stock}</td>
+        <td><div class="btns"><button class="btn-outline btn-sm" data-ti-edit="${ti.id}">Editar</button><button class="btn-danger" data-ti-del="${ti.id}">Excluir</button></div></td>
+      `;
+      tBody.appendChild(tr);
+
+      const opt = document.createElement('option');
+      opt.value = ti.id;
+      opt.textContent = `${ti.name} (Disp: ${ti.stock} - R$ ${Number(ti.price).toFixed(2)})`;
+      sSelect.appendChild(opt);
+    });
+
+    renderSales();
+  }
+
+  function renderSales() {
+    const tbody = $('salesTable');
+    const empty = $('salesEmpty');
+    tbody.innerHTML = '';
+
+    if (state.sales.length === 0) {
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+
+    state.sales.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${new Date(s.date).toLocaleDateString('pt-BR')}</td>
+        <td>${esc(s.client)}</td>
+        <td>${esc(s.ticketName)}</td>
+        <td>${s.qty}</td>
+        <td><b>R$ ${Number(s.total).toFixed(2)}</b></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  $('ticketForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const id = $('tiId').value;
+    const name = $('tiName').value.trim();
+    const price = parseFloat($('tiPrice').value);
+    const stock = parseInt($('tiStock').value);
+
+    if (!name || isNaN(price) || isNaN(stock)) {
+      $('ticketErr').textContent = 'Preencha todos os campos do ingresso corretamente.';
+      return;
+    }
+    $('ticketErr').textContent = '';
+
+    if (id) {
+      const ti = state.tickets.find(x => String(x.id) === String(id));
+      if (ti) { ti.name = name; ti.price = price; ti.stock = stock; }
+      toast('Ingresso atualizado!');
+    } else {
+      state.tickets.push({ id: 'ti_' + Date.now(), name, price, stock });
+      toast('Ingresso cadastrado!');
+    }
+
+    saveData(KEYS.tickets, state.tickets);
+    $('ticketForm').reset();
+    $('tiId').value = '';
+    $('ticketFormTitle').textContent = 'Cadastrar ingresso';
+    $('tiCancel').hidden = true;
+    renderTickets();
+  });
+
+  $('tiCancel').addEventListener('click', () => {
+    $('ticketForm').reset();
+    $('tiId').value = '';
+    $('ticketFormTitle').textContent = 'Cadastrar ingresso';
+    $('tiCancel').hidden = true;
+    $('ticketErr').textContent = '';
+  });
+
+  $('ticketTable').addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const id = btn.dataset.tiEdit || btn.dataset.tiDel;
+    if (btn.dataset.tiDel) {
+      openConfirm('Deseja excluir este ingresso?', () => {
+        state.tickets = state.tickets.filter(x => String(x.id) !== String(id));
+        saveData(KEYS.tickets, state.tickets);
+        renderTickets();
+        toast('Ingresso excluído!');
+      });
+    } else if (btn.dataset.tiEdit) {
+      const ti = state.tickets.find(x => String(x.id) === String(id));
+      if (ti) {
+        $('tiId').value = ti.id;
+        $('tiName').value = ti.name;
+        $('tiPrice').value = ti.price;
+        $('tiStock').value = ti.stock;
+        $('ticketFormTitle').textContent = 'Editar ingresso';
+        $('tiCancel').hidden = false;
+        $('tiName').focus();
+      }
+    }
+  });
+
+  $('saleForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const tiId = $('sTicket').value;
+    const client = $('sClient').value.trim();
+    const qty = parseInt($('sQty').value);
+
+    const ti = state.tickets.find(x => String(x.id) === String(tiId));
+    if (!ti || !client || isNaN(qty) || qty <= 0) {
+      $('saleErr').textContent = 'Selecione um ingresso válido e preencha o nome do cliente.';
+      return;
+    }
+    if (ti.stock < qty) {
+      $('saleErr').textContent = `Estoque insuficiente! Disponível: ${ti.stock}.`;
+      return;
+    }
+    $('saleErr').textContent = '';
+
+    ti.stock -= qty;
+    const sale = {
+      date: Date.now(),
+      client,
+      ticketName: ti.name,
+      qty,
+      total: ti.price * qty
+    };
+    state.sales.unshift(sale);
+
+    saveData(KEYS.tickets, state.tickets);
+    saveData(KEYS.sales, state.sales);
+    $('sClient').value = '';
+    $('sQty').value = '1';
+    renderTickets();
+    toast('Venda registrada com sucesso!');
+  });
+
+  function checkAdminExists() {
+    if (state.session) {
+      openModal('dashModal');
+      renderAdminTours();
+      renderTickets();
+    } else {
+      openModal('authModal');
+    }
+  }
+
+  $('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const u = $('lUser').value.trim();
+    const p = $('lPass').value;
+
+    if (u !== state.admin.user || p !== state.admin.pass) {
+      $('loginErr').textContent = 'Usuário ou senha incorretos.';
+      return;
+    }
+    $('loginErr').textContent = '';
+    state.session = true;
+    saveData(KEYS.session, true);
+    closeModal('authModal');
+    openModal('dashModal');
+    renderAdminTours();
+    renderTickets();
+    toast('Login realizado com sucesso!');
+  });
+
+  $('accUserForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const newUser = $('accNewUser').value.trim();
+    const newPass = $('accNewPass').value;
+    const pass = $('accUserPass').value;
+
+    if (pass !== state.admin.pass) {
+      $('accUserErr').textContent = 'Senha atual incorreta.';
+      $('accUserOk').textContent = '';
+      return;
+    }
+
+    if (newUser) state.admin.user = newUser;
+    if (newPass) {
+      if (newPass.length < 6) {
+        $('accUserErr').textContent = 'A nova senha deve ter no mínimo 6 caracteres.';
+        return;
+      }
+      state.admin.pass = newPass;
+    }
+
+    saveData(KEYS.admin, state.admin);
+    $('accUserErr').textContent = '';
+    $('accUserOk').textContent = 'Dados atualizados com sucesso!';
+    $('accNewUser').value = '';
+    $('accNewPass').value = '';
+    $('accUserPass').value = '';
+    toast('Dados de acesso alterados!');
+  });
+
+  $('homeForm').addEventListener('submit', e => {
+    e.preventDefault();
+    state.home = {
+      heroBadge: $('hBadge').value.trim() || DEFAULT_HOME.heroBadge,
+      heroTitle: $('hTitle').value.trim() || DEFAULT_HOME.heroTitle,
+      heroSub: $('hSub').value.trim() || DEFAULT_HOME.heroSub,
+      heroCta: $('hCta').value.trim() || DEFAULT_HOME.heroCta,
+      heroMedia: $('hMedia').value.trim() || DEFAULT_HOME.heroMedia,
+      vehicleTitle: $('vTitle').value.trim() || DEFAULT_HOME.vehicleTitle,
+      vehicleText: $('vText').value.trim() || DEFAULT_HOME.vehicleText,
+      vehicleMedia: $('vMedia').value.trim() || DEFAULT_HOME.vehicleMedia
+    };
+    saveData(KEYS.home, state.home);
+    renderSite();
+    toast('Capa e mídias atualizadas!');
+  });
+
+  function loadHomeForm() {
+    $('hBadge').value = state.home.heroBadge || '';
+    $('hTitle').value = state.home.heroTitle || '';
+    $('hSub').value = state.home.heroSub || '';
+    $('hCta').value = state.home.heroCta || '';
+    $('hMedia').value = state.home.heroMedia || '';
+    $('vTitle').value = state.home.vehicleTitle || '';
+    $('vText').value = state.home.vehicleText || '';
+    $('vMedia').value = state.home.vehicleMedia || '';
+  }
+
+  function openModal(id) { $(id).classList.add('open'); }
+  function closeModal(id) { $(id).classList.remove('open'); }
+
+  document.querySelectorAll('[data-close]').forEach(b => {
+    b.addEventListener('click', () => {
+      closeModal('authModal');
+      closeModal('dashModal');
+      closeModal('confirmModal');
+    });
+  });
+
+  $('openAdmin').addEventListener('click', checkAdminExists);
+
+  $('logoutBtn').addEventListener('click', () => {
+    state.session = false;
+    saveData(KEYS.session, false);
+    closeModal('dashModal');
+    toast('Sessão encerrada.');
+  });
+
+  document.querySelectorAll('.tabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pane').forEach(p => p.hidden = true);
+      tab.classList.add('active');
+      const pane = $('pane-' + tab.dataset.tab);
+      if (pane) pane.hidden = false;
+      if (tab.dataset.tab === 'home') loadHomeForm();
+    });
+  });
+
+  let confirmCallback = null;
+  function openConfirm(text, cb) {
+    $('confirmText').textContent = text;
+    confirmCallback = cb;
+    openModal('confirmModal');
+  }
+
+  $('confirmCancel').addEventListener('click', () => {
+    confirmCallback = null;
+    closeModal('confirmModal');
+  });
+
+  $('confirmOk').addEventListener('click', () => {
+    if (confirmCallback) confirmCallback();
+    confirmCallback = null;
+    closeModal('confirmModal');
+  });
+
+  $('menuBtn').addEventListener('click', () => {
+    const links = $('navLinks');
+    const open = links.classList.toggle('open');
+    $('menuBtn').setAttribute('aria-expanded', open);
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => $('navLinks').classList.remove('open'));
+  });
+
+  renderSite();
+  loadHomeForm();
+
+})();
+</script>
+</body>
+</html>

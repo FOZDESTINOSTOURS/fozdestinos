@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#030305">
+  <title>UBER PARTICULAR • Foz do Iguaçu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030305;
+      --surface: rgba(12, 12, 16, 0.94);
+      --gold: #e2b842;
+      --electric: #a5d8ff;
+      --white: #ffffff;
+      --muted: #a1a1ab;
+      --glow-top: rgba(165, 216, 255, 0.12);
+      --glow-bottom: rgba(226, 184, 66, 0.10);
+    }
+
+    body.weather-rain {
+      --bg: #030408;
+      --surface: rgba(10, 13, 20, 0.95);
+      --glow-top: rgba(130, 195, 255, 0.16);
+      --glow-bottom: rgba(70, 110, 160, 0.12);
+    }
+
+    body.weather-cloudy {
+      --bg: #07080a;
+      --surface: rgba(16, 17, 21, 0.95);
+      --glow-top: rgba(185, 195, 210, 0.12);
+      --glow-bottom: rgba(120, 130, 145, 0.08);
+    }
+
+    body.weather-sunny {
+      --bg: #080603;
+      --surface: rgba(18, 15, 9, 0.95);
+      --glow-top: rgba(255, 205, 85, 0.18);
+      --glow-bottom: rgba(226, 184, 66, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--white);
+      line-height: 1.45;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.5s ease, background-image 0.5s ease;
+      background-image:
+        radial-gradient(circle at 50% 0%, var(--glow-top) 0%, transparent 55%),
+        radial-gradient(circle at 85% 90%, var(--glow-bottom) 0%, transparent 50%);
+    }
+
+    #stormCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #lightningFlash {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(220, 240, 255, 0.32), rgba(255, 255, 255, 0.04) 70%, transparent);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity 0.08s ease-out;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 14px 64px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      padding: 0 4px 12px;
+    }
+
+    .brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      background: rgba(18, 18, 24, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 2px;
+      backdrop-filter: blur(8px);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--white);
+      color: #050505;
+    }
+
+    .sound-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(18, 18, 24, 0.92);
+      border: 1px solid rgba(226, 184, 66, 0.5);
+      color: var(--white);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: 0.2s;
+    }
+
+    .sound-btn.playing {
+      background: rgba(226, 184, 66, 0.18);
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 20px rgba(226, 184, 66, 0.3);
+    }
+
+    .eq-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 11px;
+    }
+
+    .eq-bars i {
+      display: block;
+      width: 2.5px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 2px;
+      opacity: 0.4;
+    }
+
+    .sound-btn.playing .eq-bars i {
+      opacity: 1;
+      animation: eqBounce 0.4s infinite ease-in-out;
+    }
+    .sound-btn.playing .eq-bars i:nth-child(2) { animation-delay: 0.12s; }
+    .sound-btn.playing .eq-bars i:nth-child(3) { animation-delay: 0.24s; }
+
+    @keyframes eqBounce {
+      0%, 100% { height: 3px; }
+      50% { height: 11px; }
+    }
+
+    .status-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      border-radius: 12px;
+      background: rgba(15, 16, 22, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--electric);
+    }
+
+    .flash-uber-card {
+      position: relative;
+      background: linear-gradient(155deg, rgba(20, 22, 30, 0.94) 0%, rgba(7, 7, 10, 0.97) 100%);
+      border-radius: 20px;
+      padding: 22px 16px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      text-align: center;
+      border: 1px solid rgba(165, 216, 255, 0.24);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(10px);
+      transition: border-color 0.1s, box-shadow 0.1s;
+    }
+
+    .flash-uber-card.struck {
+      border-color: #ffffff;
+      box-shadow: 0 0 38px rgba(165, 216, 255, 0.55), 0 0 65px rgba(255, 255, 255, 0.3);
+    }
+
+    .uber-center-word {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--white);
+      margin: 4px auto 8px;
+      animation: uberPulseBlink 1.1s infinite ease-in-out;
+    }
+
+    @keyframes uberPulseBlink {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 42px rgba(226, 184, 66, 0.5);
+      }
+      45% {
+        opacity: 0.3;
+        transform: scale(0.95);
+        text-shadow: 0 0 6px rgba(165, 216, 255, 0.25);
+      }
+      72% {
+        opacity: 1;
+        transform: scale(1.05);
+        text-shadow: 0 0 30px #ffffff, 0 0 55px var(--gold);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 42px rgba(226, 184, 66, 0.5);
+      }
+    }
+
+    .uber-particular-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .short-tagline {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .alert-box {
+      background: rgba(14, 14, 19, 0.96);
+      border: 1px solid rgba(226, 184, 66, 0.45);
+      border-left: 4px solid var(--gold);
+      border-radius: 6px 16px 16px 6px;
+      padding: 14px;
+      margin-bottom: 16px;
+      text-align: left;
+      backdrop-filter: blur(10px);
+    }
+
+    .alert-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      background: rgba(226, 184, 66, 0.12);
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .alert-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #f0f0f5;
+    }
+
+    .alert-list li {
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .alert-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .alert-list li strong {
+      color: var(--white);
+      font-weight: 800;
+    }
+
+    .car-badge {
+      margin-top: 11px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: rgba(165, 216, 255, 0.09);
+      border: 1px solid rgba(165, 216, 255, 0.35);
+      font-size: 12px;
+      color: var(--electric);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .booking-card {
+      background: var(--surface);
+      border: 1px solid rgba(226, 184, 66, 0.35);
+      border-radius: 20px;
+      padding: 20px 16px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(4, 4, 7, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--white);
+      padding: 13px 14px;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(226, 184, 66, 0.22);
+    }
+
+    .pin-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      background: rgba(4, 4, 7, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .pin-place {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .pin-btn {
+      background: var(--gold);
+      border: none;
+      color: #050505;
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .time-btn {
+      background: rgba(4, 4, 7, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--white);
+      padding: 10px 6px;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 11.5px;
+      cursor: pointer;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .time-btn.active {
+      background: var(--gold);
+      color: #050505;
+      border-color: var(--gold);
+    }
+
+    .custom-min-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .custom-min-row input {
+      width: 92px;
+      padding: 9px 10px;
+      font-size: 12.5px;
+      text-align: center;
+    }
+
+    .custom-min-label {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .eta-banner {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(226, 184, 66, 0.12);
+      border: 1px solid rgba(226, 184, 66, 0.45);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pax-selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .pax-btn {
+      background: rgba(4, 4, 7, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--muted);
+      padding: 12px 0;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .pax-btn.active {
+      background: var(--gold);
+      color: #050505;
+      border-color: var(--gold);
+    }
+
+    .pay-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .pay-btn {
+      background: rgba(4, 4, 7, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--white);
+      padding: 12px 10px;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .pay-btn.active {
+      background: var(--gold);
+      color: #050505;
+      border-color: var(--gold);
+    }
+
+    .price-box {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(226, 184, 66, 0.45);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: var(--muted);
+    }
+
+    .price-sub {
+      font-size: 11.5px;
+      color: var(--electric);
+      margin-top: 3px;
+      font-weight: 700;
+    }
+
+    .price-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .cta-btn {
+      width: 100%;
+      background: var(--white);
+      color: #050505;
+      border: none;
+      padding: 17px;
+      border-radius: 14px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 12px 30px rgba(255,255,255,0.18);
+    }
+
+    .cta-btn:active { transform: scale(0.97); }
+    .cta-btn:hover {
+      background: var(--gold);
+      box-shadow: 0 12px 32px rgba(226, 184, 66, 0.4);
+    }
+
+    .wpp-highlight {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(165, 216, 255, 0.08);
+      border: 1px solid rgba(165, 216, 255, 0.35);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--electric);
+    }
+
+    .driver-footer {
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 16px;
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+
+    .driver-footer strong {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--white);
+      display: block;
+      font-size: 12px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body class="weather-rain">
+  <canvas id="stormCanvas"></canvas>
+  <div id="lightningFlash"></div>
+
+  <div class="container">
+    <div class="top-bar">
+      <div class="brand" id="brandText">UBER PARTICULAR • FOZ</div>
+      <div class="top-controls">
+        <div class="lang-switch">
+          <button type="button" id="langPt" class="lang-btn active" onclick="setLanguage('pt', event)">PT</button>
+          <button type="button" id="langEs" class="lang-btn" onclick="setLanguage('es', event)">ES</button>
+        </div>
+        <button type="button" id="soundToggle" class="sound-btn" onclick="toggleAudio(event)">
+          <span id="speakerIcon">🔊</span>
+          <span id="soundLabel">RAVE</span>
+          <span class="eq-bars"><i></i><i></i><i></i></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="status-strip">
+      <span id="weatherBadge">🌧️ Foz do Iguaçu</span>
+      <span id="gpsShortBadge">📍 Meu local</span>
+    </div>
+
+    <div class="flash-uber-card" id="uberCard">
+      <div class="uber-center-word">UBER</div>
+      <div class="uber-particular-sub" id="uberSub">UBER PARTICULAR</div>
+      <div class="short-tagline" id="taglineText">Até 4 pessoas • Pix ou Dinheiro • Sem fila</div>
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-title" id="alertTitle">⚡ AVISOS IMPORTANTES DA SAÍDA</div>
+      <ul class="alert-list">
+        <li id="alert1"><strong>Espera ~15 min. De olho no WhatsApp:</strong> avise com antecedência e fique atento às mensagens.</li>
+        <li id="alert2"><strong>Ao me ver, grite / chame na hora</strong> para embarcar rápido na saída.</li>
+        <li id="alert3"><strong>WhatsApp 45 98812-4101:</strong> <strong>evite ligar</strong>, mande no WhatsApp — ligue <strong>só em urgência</strong>.</li>
+      </ul>
+      <div class="car-badge" id="carBadgeText">🚗 VIRTUS PRETO • PLACA BD•••46</div>
+    </div>
+
+    <div class="booking-card">
+      <div class="card-title" id="cardTitleText">Pedir Carro</div>
+
+      <div class="form-group">
+        <label id="labelNome">Nome</label>
+        <input type="text" id="nome" placeholder="Seu nome">
+      </div>
+
+      <div class="form-group">
+        <label id="labelLocal">Onde você está</label>
+        <div class="pin-bar">
+          <span class="pin-place" id="pinPlaceText">Foz do Iguaçu</span>
+          <button type="button" class="pin-btn" id="pinBtnText" onclick="localizarAgora()">📍 Meu local</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="labelDestino">Para onde você vai?</label>
+        <input type="text" id="endereco" oninput="calcularEstimativaPorEndereco()" placeholder="Digite o endereço, hotel ou bairro">
+      </div>
+
+      <div class="form-group">
+        <label id="labelSaida">Que horas quer sair?</label>
+        <div class="time-grid">
+          <button type="button" class="time-btn active" onclick="selectTempoSaida(this, 15)">Sai agora (~15m)</button>
+          <button type="button" class="time-btn" onclick="selectTempoSaida(this, 15)">Daqui 15 min</button>
+          <button type="button" class="time-btn" onclick="selectTempoSaida(this, 20)">Daqui 20 min</button>
+          <button type="button" class="time-btn" onclick="selectTempoSaida(this, 30)">Daqui 30 min</button>
+          <button type="button" class="time-btn" onclick="selectTempoSaida(this, 45)">Daqui 45 min</button>
+          <button type="button" class="time-btn" onclick="selectTempoSaida(this, null)">Outro tempo</button>
+        </div>
+        <div class="custom-min-row">
+          <input type="number" id="minutosCustom" min="1" max="240" value="15" oninput="atualizarHorarioSaida()">
+          <span class="custom-min-label" id="customMinLabel">min a partir de agora</span>
+        </div>
+        <div class="eta-banner" id="etaBannerText">⏰ Agora: 00:00 • Saída estimada: 00:15</div>
+      </div>
+
+      <div class="form-group">
+        <label id="labelPax">Passageiros (Até 4)</label>
+        <div class="pax-selector">
+          <button type="button" class="pax-btn active" onclick="selectPax(this, 1)">1</button>
+          <button type="button" class="pax-btn" onclick="selectPax(this, 2)">2</button>
+          <button type="button" class="pax-btn" onclick="selectPax(this, 3)">3</button>
+          <button type="button" class="pax-btn" onclick="selectPax(this, 4)">4</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="labelPay">Pagamento</label>
+        <div class="pay-selector">
+          <button type="button" class="pay-btn active" id="btnPayPix" onclick="selectPay(this, 'pix')">Pix</button>
+          <button type="button" class="pay-btn" id="btnPayCash" onclick="selectPay(this, 'cash')">Dinheiro</button>
+        </div>
+      </div>
+
+      <div class="price-box">
+        <div>
+          <div class="price-label" id="priceLabelText">Valor Estimado</div>
+          <div class="price-sub" id="priceDetalhe">Capitão Bar / Centro / Av. Cataratas até Carimã</div>
+        </div>
+        <div class="price-value" id="priceDisplay">R$ 50</div>
+      </div>
+
+      <button type="button" class="cta-btn" id="ctaBtnText" onclick="chamarWhatsApp()">
+        CHAMAR NO WHATSAPP ⚡
+      </button>
+      <div class="wpp-highlight" id="wppNoteText">⚠️ Espera ~15 min • De olho no WhatsApp</div>
+    </div>
+
+    <div class="driver-footer">
+      <strong>Foz Destinos • Motorista Particular</strong>
+      <span id="footerSub">Virtus Preto • Placa BD•••46 • WhatsApp 45 98812-4101</span>
+    </div>
+  </div>
+
+  <script>
+    const CAR_INFO = {
+      pt: 'VIRTUS PRETO • PLACA BD•••46',
+      es: 'VIRTUS NEGRO • PATENTE BD•••46'
+    };
+
+    const I18N = {
+      pt: {
+        htmlLang: 'pt-BR',
+        brand: 'UBER PARTICULAR • FOZ',
+        uberSub: 'UBER PARTICULAR',
+        tagline: 'Até 4 pessoas • Pix ou Dinheiro • Sem fila',
+        alertTitle: '⚡ AVISOS IMPORTANTES DA SAÍDA',
+        alert1: '<strong>Espera ~15 min. De olho no WhatsApp:</strong> avise com antecedência e fique atento às mensagens.',
+        alert2: '<strong>Ao me ver, grite / chame na hora</strong> para embarcar rápido na saída.',
+        alert3: '<strong>WhatsApp 45 98812-4101:</strong> <strong>evite ligar</strong>, mande no WhatsApp — ligue <strong>só em urgência</strong>.',
+        cardTitle: 'Pedir Carro',
+        labelNome: 'Nome',
+        placeholderNome: 'Seu nome',
+        defaultPassenger: 'Passageiro',
+        labelLocal: 'Onde você está',
+        pinBtn: '📍 Meu local',
+        pinDefault: 'Foz do Iguaçu',
+        pinFinding: 'Buscando local...',
+        labelDestino: 'Para onde você vai?',
+        placeholderDestino: 'Digite o endereço, hotel ou bairro',
+        defaultAddress: 'A combinar',
+        labelSaida: 'Que horas quer sair?',
+        timeButtons: ['Sai agora (~15m)', 'Daqui 15 min', 'Daqui 20 min', 'Daqui 30 min', 'Daqui 45 min', 'Outro tempo'],
+        customMinLabel: 'min a partir de agora',
+        etaText: (agoraStr, saidaStr) => `⏰ Agora: ${agoraStr} • Saída estimada: ${saidaStr}`,
+        labelPax: 'Passageiros (Até 4)',
+        labelPay: 'Pagamento',
+        payPix: 'Pix',
+        payCash: 'Dinheiro',
+        priceLabel: 'Valor Estimado',
+        ctaBtn: 'CHAMAR NO WHATSAPP ⚡',
+        wppNote: '⚠️ Espera ~15 min • De olho no WhatsApp',
+        footerSub: 'Virtus Preto • Placa BD•••46 • WhatsApp 45 98812-4101',
+        rotaPadrao: 'Capitão Bar / Centro / Av. Cataratas até Carimã',
+        rotaExtra2km: 'Capitão Bar / Centro / Cataratas (+2 km • +R$ 10)',
+        rotaCampos: 'Campos do Iguaçu / Região',
+        rotaPonte: 'Ponte da Amizade / Vila Portes',
+        rotaAero: 'Passou do Carimã / Sentido Aeroporto (IGU)',
+        rotaMorumbi: 'Morumbi / Região',
+        paxSingular: '1 Pessoa',
+        paxPlural: (n) => `${n} Pessoas`,
+        wppHeader: 'Olá! Quero chamar *UBER PARTICULAR* ⚡',
+        wppCar: 'Carro',
+        wppName: 'Nome',
+        wppOrigin: 'Local',
+        wppAddress: 'Destino',
+        wppDeparture: 'Saída estimada',
+        wppEstimate: 'Estimativa',
+        wppPax: 'Passageiros',
+        wppPay: 'Pagamento',
+        wppPrice: 'Valor estimado'
+      },
+      es: {
+        htmlLang: 'es',
+        brand: 'UBER PRIVADO • FOZ',
+        uberSub: 'UBER PRIVADO',
+        tagline: 'Hasta 4 personas • Pix o Efectivo • Sin fila',
+        alertTitle: '⚡ AVISOS IMPORTANTES DE SALIDA',
+        alert1: '<strong>Espera ~15 min. Atento al WhatsApp:</strong> avisá con anticipación y mirá los mensajes.',
+        alert2: '<strong>Cuando me veas, gritá / llamá en el acto</strong> para subir rápido a la salida.',
+        alert3: '<strong>WhatsApp 45 98812-4101:</strong> <strong>evitá llamar</strong>, mandá WhatsApp — llamá <strong>solo por urgencia</strong>.',
+        cardTitle: 'Pedir Auto',
+        labelNome: 'Nombre',
+        placeholderNome: 'Tu nombre',
+        defaultPassenger: 'Pasajero',
+        labelLocal: 'Dónde estás',
+        pinBtn: '📍 Mi ubicación',
+        pinDefault: 'Foz do Iguaçu',
+        pinFinding: 'Buscando ubicación...',
+        labelDestino: '¿A dónde vas?',
+        placeholderDestino: 'Escribí dirección, hotel o barrio',
+        defaultAddress: 'A coordinar',
+        labelSaida: '¿A qué hora querés salir?',
+        timeButtons: ['Sale ahora (~15m)', 'En 15 min', 'En 20 min', 'En 30 min', 'En 45 min', 'Otro tiempo'],
+        customMinLabel: 'min desde ahora',
+        etaText: (agoraStr, saidaStr) => `⏰ Ahora: ${agoraStr} • Salida estimada: ${saidaStr}`,
+        labelPax: 'Pasajeros (Hasta 4)',
+        labelPay: 'Pago',
+        payPix: 'Pix',
+        payCash: 'Efectivo',
+        priceLabel: 'Precio Estimado',
+        ctaBtn: 'PEDIR POR WHATSAPP ⚡',
+        wppNote: '⚠️ Espera ~15 min • Atento al WhatsApp',
+        footerSub: 'Virtus Negro • Patente BD•••46 • WhatsApp 45 98812-4101',
+        rotaPadrao: 'Capitán Bar / Centro / Av. Cataratas hasta Carimã',
+        rotaExtra2km: 'Capitán Bar / Centro / Cataratas (+2 km • +R$ 10)',
+        rotaCampos: 'Campos do Iguaçu / Zona',
+        rotaPonte: 'Puente de la Amistad / Vila Portes',
+        rotaAero: 'Pasando Carimã / Hacia el Aeropuerto (IGU)',
+        rotaMorumbi: 'Morumbi / Zona',
+        paxSingular: '1 Persona',
+        paxPlural: (n) => `${n} Personas`,
+        wppHeader: '¡Hola! Quiero pedir *UBER PRIVADO* ⚡',
+        wppCar: 'Auto',
+        wppName: 'Nombre',
+        wppOrigin: 'Ubicación',
+        wppAddress: 'Destino',
+        wppDeparture: 'Salida estimada',
+        wppEstimate: 'Estimación',
+        wppPax: 'Pasajeros',
+        wppPay: 'Pago',
+        wppPrice: 'Precio estimado'
+      }
+    };
+
+    let currentLang = 'pt';
+    let paxSelecionado = 1;
+    let pagamentoKey = 'pix';
+    let valorCalculado = 50;
+    let estimativaDetalhe = '';
+    let localAtualTexto = 'Foz do Iguaçu';
+    let horaSaidaEstimada = '';
+    let climaAtualModo = 'rain';
+
+    function normalizarTexto(txt) {
+      return (txt || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim();
+    }
+
+    function passouDoCarimaSentidoAeroporto(t) {
+      const depoisDoCarima =
+        t.includes('depois do carima') ||
+        t.includes('apos o carima') ||
+        t.includes('passou do carima') ||
+        t.includes('passando carima') ||
+        t.includes('depois de carima') ||
+        t.includes('apos carima');
+
+      const trechoAeroporto =
+        t.includes('aeroporto') ||
+        t.includes('igu') ||
+        t.includes('km 10') ||
+        t.includes('km 11') ||
+        t.includes('km 12') ||
+        t.includes('km 13') ||
+        t.includes('km 14') ||
+        t.includes('km 15') ||
+        t.includes('km 16') ||
+        t.includes('km 17') ||
+        t.includes('km 18') ||
+        t.includes('wish') ||
+        t.includes('continental') ||
+        t.includes('san martin') ||
+        t.includes('aquarium');
+
+      return depoisDoCarima || trechoAeroporto;
+    }
+
+    function eCataratasAteCarima(t) {
+      return (
+        t.includes('cataratas') ||
+        t.includes('mabu') ||
+        t.includes('catuai') ||
+        t.includes('carima') ||
+        t.includes('vila iguassu') ||
+        t.includes('vila iguacu') ||
+        t.includes('capitao bar') ||
+        t.includes('centro') ||
+        t.includes('jorge sanwais') ||
+        t.includes('brasil') ||
+        t.includes('hotel')
+      );
+    }
+
+    function detectaMaisDe2Km(t) {
+      if (!t || eCataratasAteCarima(t)) return false;
+
+      const matchKm = t.match(/(\d+(?:[.,]\d+)?)\s*km/);
+      if (matchKm) {
+        const kmVal = parseFloat(matchKm[1].replace(',', '.'));
+        if (!isNaN(kmVal) && kmVal > 2) return true;
+      }
+
+      const afastados = [
+        'vila a', 'vila yolanda', 'tres lagoas', 'porto belo',
+        'jardim aurora', 'jardim lancaster', 'maracana',
+        'alvorada', 'monjolo', 'profilurb', 'itaipu', 'lago de itaipu'
+      ];
+      return afastados.some(termo => t.includes(termo));
+    }
+
+    function calcularEstimativaPorEndereco() {
+      const t = normalizarTexto(document.getElementById('endereco').value);
+      const langTxt = I18N[currentLang];
+
+      if (!t) {
+        valorCalculado = 50;
+        estimativaDetalhe = langTxt.rotaPadrao;
+      } else if (passouDoCarimaSentidoAeroporto(t)) {
+        valorCalculado = 80;
+        estimativaDetalhe = langTxt.rotaAero;
+      } else if (t.includes('campos do iguacu') || t.includes('campos do iguassu') || t.includes('rua tibagi') || t.includes('tibagi')) {
+        valorCalculado = 60;
+        estimativaDetalhe = langTxt.rotaCampos;
+      } else if (t.includes('ponte da amizade') || t.includes('vila portes') || t.includes('portes') || t.includes('aduana') || t.includes('paraguai')) {
+        valorCalculado = 80;
+        estimativaDetalhe = langTxt.rotaPonte;
+      } else if (t.includes('morumbi') || t.includes('conjunto c') || t.includes('bubas')) {
+        valorCalculado = 80;
+        estimativaDetalhe = langTxt.rotaMorumbi;
+      } else if (detectaMaisDe2Km(t)) {
+        valorCalculado = 60;
+        estimativaDetalhe = langTxt.rotaExtra2km;
+      } else {
+        valorCalculado = 50;
+        estimativaDetalhe = langTxt.rotaPadrao;
+      }
+
+      document.getElementById('priceDisplay').textContent = `R$ ${valorCalculado}`;
+      document.getElementById('priceDetalhe').textContent = estimativaDetalhe;
+    }
+
+    function distanciaKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = ((lat2 - lat1) * Math.PI) / 180;
+      const dLon = ((lon2 - lon1) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function identificarZona(lat, lon) {
+      const dYupStar = distanciaKm(lat, lon, -25.5735, -54.5685);
+      const dCentro = distanciaKm(lat, lon, -25.5478, -54.5882);
+      const dAeroporto = distanciaKm(lat, lon, -25.5961, -54.4877);
+
+      if (dYupStar <= 0.65) return 'Yup Star • Av. das Cataratas';
+      if (dAeroporto <= 2.2) return 'Sentido Aeroporto / Av. das Cataratas';
+      if (lat < -25.555 && lon > -54.575) return 'Av. das Cataratas / Hotéis';
+      if (dCentro <= 2.2) return 'Centro / Capitão Bar';
+      return 'Foz do Iguaçu';
+    }
+
+    function localizarAgora() {
+      const placeEl = document.getElementById('pinPlaceText');
+      const shortEl = document.getElementById('gpsShortBadge');
+      placeEl.textContent = I18N[currentLang].pinFinding;
+
+      if (!navigator.geolocation) {
+        localAtualTexto = I18N[currentLang].pinDefault;
+        placeEl.textContent = localAtualTexto;
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const zona = identificarZona(pos.coords.latitude, pos.coords.longitude);
+          localAtualTexto = zona;
+          placeEl.textContent = zona;
+          shortEl.textContent = `📍 ${zona.split('•')[0].trim()}`;
+        },
+        () => {
+          localAtualTexto = I18N[currentLang].pinDefault;
+          placeEl.textContent = localAtualTexto;
+        },
+        { enableHighAccuracy: true, timeout: 7000, maximumAge: 15000 }
+      );
+    }
+
+    function aplicarAparenciaClima(modo, tempStr, labelTexto) {
+      climaAtualModo = modo;
+      document.body.classList.remove('weather-rain', 'weather-cloudy', 'weather-sunny');
+      if (modo === 'rain') document.body.classList.add('weather-rain');
+      else if (modo === 'cloudy') document.body.classList.add('weather-cloudy');
+      else document.body.classList.add('weather-sunny');
+
+      const icon = modo === 'rain' ? '🌧️' : modo === 'cloudy' ? '☁️' : '☀️';
+      const tempPart = tempStr ? ` ${tempStr}°C` : '';
+      document.getElementById('weatherBadge').textContent = `${icon} ${labelTexto}${tempPart} • Foz`;
+    }
+
+    async function atualizarClimaFoz() {
+      try {
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=-25.5478&longitude=-54.5882&current=temperature_2m,weather_code&timezone=America%2FSao_Paulo';
+        const resp = await fetch(url);
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const curr = data && data.current;
+        if (!curr) return;
+
+        const code = Number(curr.weather_code);
+        const temp = Math.round(curr.temperature_2m);
+
+        const isRain =
+          (code >= 51 && code <= 67) ||
+          (code >= 80 && code <= 82) ||
+          (code >= 95 && code <= 99);
+
+        const isCloudy = code === 2 || code === 3 || code === 45 || code === 48;
+
+        if (isRain) {
+          aplicarAparenciaClima('rain', temp, code >= 95 ? 'Tempestade' : 'Chuva');
+        } else if (isCloudy) {
+          aplicarAparenciaClima('cloudy', temp, 'Nublado');
+        } else {
+          aplicarAparenciaClima('sunny', temp, 'Sol');
+        }
+      } catch (e) {}
+    }
+
+    function formatHoraHHMM(dateObj) {
+      const hh = String(dateObj.getHours()).padStart(2, '0');
+      const mm = String(dateObj.getMinutes()).padStart(2, '0');
+      return `${hh}:${mm}`;
+    }
+
+    function selectTempoSaida(btn, minVal) {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const inputCustom = document.getElementById('minutosCustom');
+      if (typeof minVal === 'number') {
+        inputCustom.value = minVal;
+      } else {
+        inputCustom.focus();
+      }
+      atualizarHorarioSaida();
+    }
+
+    function atualizarHorarioSaida() {
+      const raw = parseInt(document.getElementById('minutosCustom').value, 10);
+      const mins = (!isNaN(raw) && raw > 0) ? Math.min(240, raw) : 15;
+
+      const agora = new Date();
+      const saida = new Date(agora.getTime() + mins * 60000);
+
+      const agoraStr = formatHoraHHMM(agora);
+      const saidaStr = formatHoraHHMM(saida);
+      horaSaidaEstimada = `${saidaStr} (daqui ${mins} min)`;
+
+      document.getElementById('etaBannerText').textContent = I18N[currentLang].etaText(agoraStr, saidaStr);
+    }
+
+    function selectPax(btn, qtd) {
+      document.querySelectorAll('.pax-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      paxSelecionado = Math.min(4, Math.max(1, qtd));
+    }
+
+    function selectPay(btn, metodo) {
+      document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      pagamentoKey = metodo;
+    }
+
+    function setLanguage(lang, event) {
+      if (event) event.stopPropagation();
+      currentLang = lang === 'es' ? 'es' : 'pt';
+      const t = I18N[currentLang];
+
+      document.documentElement.lang = t.htmlLang;
+      document.getElementById('langPt').classList.toggle('active', currentLang === 'pt');
+      document.getElementById('langEs').classList.toggle('active', currentLang === 'es');
+
+      document.getElementById('brandText').textContent = t.brand;
+      document.getElementById('uberSub').textContent = t.uberSub;
+      document.getElementById('taglineText').textContent = t.tagline;
+      document.getElementById('alertTitle').textContent = t.alertTitle;
+      document.getElementById('alert1').innerHTML = t.alert1;
+      document.getElementById('alert2').innerHTML = t.alert2;
+      document.getElementById('alert3').innerHTML = t.alert3;
+      document.getElementById('carBadgeText').textContent = `🚗 ${CAR_INFO[currentLang]}`;
+
+      document.getElementById('cardTitleText').textContent = t.cardTitle;
+      document.getElementById('labelNome').textContent = t.labelNome;
+      document.getElementById('nome').placeholder = t.placeholderNome;
+      document.getElementById('labelLocal').textContent = t.labelLocal;
+      document.getElementById('pinBtnText').textContent = t.pinBtn;
+      if (localAtualTexto === 'Foz do Iguaçu') {
+        document.getElementById('pinPlaceText').textContent = t.pinDefault;
+      }
+
+      document.getElementById('labelDestino').textContent = t.labelDestino;
+      document.getElementById('endereco').placeholder = t.placeholderDestino;
+
+      document.getElementById('labelSaida').textContent = t.labelSaida;
+      const timeBtns = document.querySelectorAll('.time-btn');
+      t.timeButtons.forEach((txt, idx) => {
+        if (timeBtns[idx]) timeBtns[idx].textContent = txt;
+      });
+      document.getElementById('customMinLabel').textContent = t.customMinLabel;
+
+      document.getElementById('labelPax').textContent = t.labelPax;
+      document.getElementById('labelPay').textContent = t.labelPay;
+      document.getElementById('btnPayPix').textContent = t.payPix;
+      document.getElementById('btnPayCash').textContent = t.payCash;
+      document.getElementById('priceLabelText').textContent = t.priceLabel;
+      document.getElementById('ctaBtnText').textContent = t.ctaBtn;
+      document.getElementById('wppNoteText').textContent = t.wppNote;
+      document.getElementById('footerSub').textContent = t.footerSub;
+
+      atualizarHorarioSaida();
+      calcularEstimativaPorEndereco();
+    }
+
+    // ================= VISUAL DE CLIMA (CHUVA / NUBLADO / SOL) =================
+    const canvas = document.getElementById('stormCanvas');
+    const ctx = canvas.getContext('2d');
+    const flashOverlay = document.getElementById('lightningFlash');
+    const uberCard = document.getElementById('uberCard');
+
+    let width, height;
+    let raindrops = [];
+    let bolts = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 110; i++) {
+      raindrops.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        len: Math.random() * 18 + 10,
+        speed: Math.random() * 9 + 11,
+        opacity: Math.random() * 0.25 + 0.08
+      });
+    }
+
+    function spawnLightning() {
+      if (climaAtualModo !== 'rain') return;
+      const startX = Math.random() * width * 0.8 + width * 0.1;
+      let currX = startX;
+      let currY = 0;
+      const segments = [];
+      const steps = Math.floor(Math.random() * 8) + 10;
+
+      for (let i = 0; i < steps; i++) {
+        const nextX = currX + (Math.random() - 0.5) * 75;
+        const nextY = currY + (height * 0.55) / steps;
+        segments.push({ x1: currX, y1: currY, x2: nextX, y2: nextY, width: 2.2 - (i / steps) * 1.4 });
+
+        if (Math.random() > 0.65) {
+          segments.push({
+            x1: nextX,
+            y1: nextY,
+            x2: nextX + (Math.random() - 0.5) * 90,
+            y2: nextY + 45,
+            width: 0.9
+          });
+        }
+        currX = nextX;
+        currY = nextY;
+      }
+
+      bolts.push({ segments, alpha: 1 });
+
+      flashOverlay.style.opacity = '1';
+      uberCard.classList.add('struck');
+      setTimeout(() => {
+        flashOverlay.style.opacity = '0';
+        uberCard.classList.remove('struck');
+      }, 95);
+
+      setTimeout(() => {
+        flashOverlay.style.opacity = '0.65';
+        uberCard.classList.add('struck');
+        setTimeout(() => {
+          flashOverlay.style.opacity = '0';
+          uberCard.classList.remove('struck');
+        }, 70);
+      }, 150);
+    }
+
+    function scheduleNextBolt() {
+      const delay = Math.random() * 3400 + 1800;
+      setTimeout(() => {
+        spawnLightning();
+        scheduleNextBolt();
+      }, delay);
+    }
+    setTimeout(spawnLightning, 700);
+    scheduleNextBolt();
+
+    function renderStorm() {
+      ctx.clearRect(0, 0, width, height);
+
+      if (climaAtualModo === 'rain') {
+        ctx.lineWidth = 1;
+        for (let drop of raindrops) {
+          ctx.strokeStyle = `rgba(180, 215, 255, ${drop.opacity})`;
+          ctx.beginPath();
+          ctx.moveTo(drop.x, drop.y);
+          ctx.lineTo(drop.x - 2.5, drop.y + drop.len);
+          ctx.stroke();
+
+          drop.x -= 1.8;
+          drop.y += drop.speed;
+
+          if (drop.y > height) {
+            drop.y = -20;
+            drop.x = Math.random() * (width + 60);
+          }
+        }
+
+        for (let i = bolts.length - 1; i >= 0; i--) {
+          const b = bolts[i];
+          ctx.save();
+          ctx.shadowColor = '#a5d8ff';
+          ctx.shadowBlur = 16;
+
+          for (let seg of b.segments) {
+            ctx.strokeStyle = `rgba(235, 248, 255, ${b.alpha})`;
+            ctx.lineWidth = seg.width;
+            ctx.beginPath();
+            ctx.moveTo(seg.x1, seg.y1);
+            ctx.lineTo(seg.x2, seg.y2);
+            ctx.stroke();
+          }
+          ctx.restore();
+
+          b.alpha -= 0.06;
+          if (b.alpha <= 0) bolts.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(renderStorm);
+    }
+    renderStorm();
+
+    // ================= ÁUDIO ESTILO RAVE (134 BPM) =================
+    let audioCtx = null;
+    let beatTimer = null;
+    let isPlaying = false;
+    let stepCount = 0;
+
+    const RAVE_STEP_MS = 112;
+    const RAVE_ARP_NOTES = [110, 130.81, 164.81, 220, 196, 164.81, 146.83, 130.81];
+
+    function triggerRaveStep() {
+      if (!audioCtx || !isPlaying) return;
+      const now = audioCtx.currentTime;
+      const step = stepCount % 16;
+
+      if (step % 4 === 0) {
+        const kickOsc = audioCtx.createOscillator();
+        const kickGain = audioCtx.createGain();
+        kickOsc.type = 'sine';
+        kickOsc.frequency.setValueAtTime(165, now);
+        kickOsc.frequency.exponentialRampToValueAtTime(36, now + 0.14);
+
+        kickGain.gain.setValueAtTime(0.42, now);
+        kickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+        kickOsc.connect(kickGain);
+        kickGain.connect(audioCtx.destination);
+        kickOsc.start(now);
+        kickOsc.stop(now + 0.17);
+      }
+
+      if (step % 4 === 2) {
+        const subOsc = audioCtx.createOscillator();
+        const subGain = audioCtx.createGain();
+        const subFilter = audioCtx.createBiquadFilter();
+
+        subOsc.type = 'sawtooth';
+        subOsc.frequency.setValueAtTime(55, now);
+
+        subFilter.type = 'lowpass';
+        subFilter.frequency.setValueAtTime(290, now);
+
+        subGain.gain.setValueAtTime(0.16, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+        subOsc.connect(subFilter);
+        subFilter.connect(subGain);
+        subGain.connect(audioCtx.destination);
+        subOsc.start(now);
+        subOsc.stop(now + 0.17);
+      }
+
+      const arpOsc = audioCtx.createOscillator();
+      const arpGain = audioCtx.createGain();
+      const arpFilter = audioCtx.createBiquadFilter();
+
+      const freq = RAVE_ARP_NOTES[step % RAVE_ARP_NOTES.length];
+      arpOsc.type = 'sawtooth';
+      arpOsc.frequency.setValueAtTime(freq, now);
+
+      const cutoff = 550 + Math.sin(stepCount * 0.35) * 650 + (step % 4 === 0 ? 500 : 0);
+      arpFilter.type = 'bandpass';
+      arpFilter.frequency.setValueAtTime(Math.max(250, cutoff), now);
+      arpFilter.Q.setValueAtTime(3.2, now);
+
+      arpGain.gain.setValueAtTime(0.065, now);
+      arpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+      arpOsc.connect(arpFilter);
+      arpFilter.connect(arpGain);
+      arpGain.connect(audioCtx.destination);
+      arpOsc.start(now);
+      arpOsc.stop(now + 0.11);
+
+      if (step === 4 || step === 12) {
+        const clapLen = audioCtx.sampleRate * 0.08;
+        const clapBuf = audioCtx.createBuffer(1, clapLen, audioCtx.sampleRate);
+        const clapData = clapBuf.getChannelData(0);
+        for (let i = 0; i < clapLen; i++) clapData[i] = Math.random() * 2 - 1;
+
+        const clapSrc = audioCtx.createBufferSource();
+        clapSrc.buffer = clapBuf;
+
+        const clapFilter = audioCtx.createBiquadFilter();
+        clapFilter.type = 'bandpass';
+        clapFilter.frequency.setValueAtTime(1600, now);
+
+        const clapGain = audioCtx.createGain();
+        clapGain.gain.setValueAtTime(0.14, now);
+        clapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+        clapSrc.connect(clapFilter);
+        clapFilter.connect(clapGain);
+        clapGain.connect(audioCtx.destination);
+        clapSrc.start(now);
+      }
+
+      const hatLen = step % 2 === 1 ? 0.055 : 0.025;
+      const hatSize = Math.floor(audioCtx.sampleRate * hatLen);
+      const hatBuffer = audioCtx.createBuffer(1, hatSize, audioCtx.sampleRate);
+      const hatData = hatBuffer.getChannelData(0);
+      for (let i = 0; i < hatSize; i++) hatData[i] = Math.random() * 2 - 1;
+
+      const hatNoise = audioCtx.createBufferSource();
+      hatNoise.buffer = hatBuffer;
+
+      const hpFilter = audioCtx.createBiquadFilter();
+      hpFilter.type = 'highpass';
+      hpFilter.frequency.setValueAtTime(8200, now);
+
+      const hatGain = audioCtx.createGain();
+      hatGain.gain.setValueAtTime(step % 2 === 1 ? 0.08 : 0.035, now);
+      hatGain.gain.exponentialRampToValueAtTime(0.001, now + hatLen);
+
+      hatNoise.connect(hpFilter);
+      hpFilter.connect(hatGain);
+      hatGain.connect(audioCtx.destination);
+      hatNoise.start(now);
+
+      stepCount++;
+    }
+
+    function startAudio() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+
+      if (!audioCtx) audioCtx = new AudioContextClass();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      if (!beatTimer) beatTimer = setInterval(triggerRaveStep, RAVE_STEP_MS);
+
+      isPlaying = true;
+      updateAudioUI();
+    }
+
+    function stopAudio() {
+      isPlaying = false;
+      if (beatTimer) {
+        clearInterval(beatTimer);
+        beatTimer = null;
+      }
+      updateAudioUI();
+    }
+
+    function toggleAudio(event) {
+      if (event) event.stopPropagation();
+      isPlaying ? stopAudio() : startAudio();
+    }
+
+    function updateAudioUI() {
+      const btn = document.getElementById('soundToggle');
+      const icon = document.getElementById('speakerIcon');
+      const label = document.getElementById('soundLabel');
+      if (!btn) return;
+
+      if (isPlaying) {
+        btn.classList.add('playing');
+        icon.textContent = '🔊';
+        label.textContent = 'RAVE ON';
+      } else {
+        btn.classList.remove('playing');
+        icon.textContent = '🔇';
+        label.textContent = 'RAVE OFF';
+      }
+    }
+
+    function unlockOnFirstInteraction() {
+      if (!isPlaying && !audioCtx) startAudio();
+      document.removeEventListener('pointerdown', unlockOnFirstInteraction);
+    }
+    document.addEventListener('pointerdown', unlockOnFirstInteraction);
+
+    // ================= ENVIO WHATSAPP =================
+    function chamarWhatsApp() {
+      atualizarHorarioSaida();
+      calcularEstimativaPorEndereco();
+      const t = I18N[currentLang];
+      const nome = document.getElementById('nome').value.trim() || t.defaultPassenger;
+      const enderecoFinal = document.getElementById('endereco').value.trim() || t.defaultAddress;
+      const telefone = '5545988124101';
+      const textoPax = paxSelecionado === 1 ? t.paxSingular : t.paxPlural(paxSelecionado);
+      const textoPay = pagamentoKey === 'pix' ? t.payPix : t.payCash;
+
+      const texto = `${t.wppHeader}\n\n` +
+                    `• *${t.wppCar}:* ${CAR_INFO[currentLang]}\n` +
+                    `• *${t.wppName}:* ${nome}\n` +
+                    `• *${t.wppOrigin}:* ${localAtualTexto}\n` +
+                    `• *${t.wppAddress}:* ${enderecoFinal}\n` +
+                    `• *${t.wppDeparture}:* *${horaSaidaEstimada}*\n` +
+                    `• *${t.wppEstimate}:* ${estimativaDetalhe}\n` +
+                    `• *${t.wppPax}:* ${textoPax} (máx. 4)\n` +
+                    `• *${t.wppPay}:* ${textoPay}\n` +
+                    `• *${t.wppPrice}:* R$ ${valorCalculado},00`;
+
+      const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+
+    setLanguage('pt');
+    localizarAgora();
+    atualizarClimaFoz();
+    setInterval(atualizarHorarioSaida, 30000);
+    setInterval(atualizarClimaFoz, 120000);
+  </script>
+</body>
+</html>

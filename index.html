@@ -783,21 +783,15 @@
         rotaPadrao: 'Capitão Bar / Centro / Av. Cataratas até Carimã',
         rotaExtra2km: 'Capitão Bar / Centro / Cataratas (+2 km • +R$ 10)',
         rotaCampos: 'Campos do Iguaçu / Região',
-        rotaPonte: 'Ponte da Amizade / Vila Portes',
+        rotaPonte: 'Ponte da Amizade / Vila Portes / Jardim América',
         rotaAero: 'Passou do Carimã / Sentido Aeroporto (IGU)',
         rotaMorumbi: 'Morumbi / Região',
-        paxSingular: '1 Pessoa',
-        paxPlural: (n) => `${n} Pessoas`,
-        wppHeader: 'Olá! Quero chamar *UBER PARTICULAR* ⚡',
-        wppCar: 'Carro',
+        wppHeader: '*UBER PARTICULAR* ⚡',
         wppName: 'Nome',
-        wppOrigin: 'Local',
+        wppDeparture: 'Saída',
         wppAddress: 'Destino',
-        wppDeparture: 'Saída estimada',
-        wppEstimate: 'Estimativa',
-        wppPax: 'Passageiros',
-        wppPay: 'Pagamento',
-        wppPrice: 'Valor estimado'
+        wppWaze: 'Waze',
+        wppPrice: 'Valor'
       },
       es: {
         htmlLang: 'es',
@@ -834,21 +828,15 @@
         rotaPadrao: 'Capitán Bar / Centro / Av. Cataratas hasta Carimã',
         rotaExtra2km: 'Capitán Bar / Centro / Cataratas (+2 km • +R$ 10)',
         rotaCampos: 'Campos do Iguaçu / Zona',
-        rotaPonte: 'Puente de la Amistad / Vila Portes',
+        rotaPonte: 'Puente de la Amistad / Vila Portes / Jardim América',
         rotaAero: 'Pasando Carimã / Hacia el Aeropuerto (IGU)',
         rotaMorumbi: 'Morumbi / Zona',
-        paxSingular: '1 Persona',
-        paxPlural: (n) => `${n} Personas`,
-        wppHeader: '¡Hola! Quiero pedir *UBER PRIVADO* ⚡',
-        wppCar: 'Auto',
+        wppHeader: '*UBER PRIVADO* ⚡',
         wppName: 'Nombre',
-        wppOrigin: 'Ubicación',
+        wppDeparture: 'Salida',
         wppAddress: 'Destino',
-        wppDeparture: 'Salida estimada',
-        wppEstimate: 'Estimación',
-        wppPax: 'Pasajeros',
-        wppPay: 'Pago',
-        wppPrice: 'Precio estimado'
+        wppWaze: 'Waze',
+        wppPrice: 'Valor'
       }
     };
 
@@ -898,6 +886,18 @@
       return depoisDoCarima || trechoAeroporto;
     }
 
+    function ePontePortesOuJardimAmerica(t) {
+      return (
+        t.includes('ponte da amizade') ||
+        t.includes('vila portes') ||
+        t.includes('portes') ||
+        t.includes('jardim america') ||
+        t.includes('guimaraes rosa') ||
+        t.includes('aduana') ||
+        t.includes('paraguai')
+      );
+    }
+
     function eCataratasAteCarima(t) {
       return (
         t.includes('cataratas') ||
@@ -941,12 +941,12 @@
       } else if (passouDoCarimaSentidoAeroporto(t)) {
         valorCalculado = 80;
         estimativaDetalhe = langTxt.rotaAero;
+      } else if (ePontePortesOuJardimAmerica(t)) {
+        valorCalculado = 80;
+        estimativaDetalhe = langTxt.rotaPonte;
       } else if (t.includes('campos do iguacu') || t.includes('campos do iguassu') || t.includes('rua tibagi') || t.includes('tibagi')) {
         valorCalculado = 60;
         estimativaDetalhe = langTxt.rotaCampos;
-      } else if (t.includes('ponte da amizade') || t.includes('vila portes') || t.includes('portes') || t.includes('aduana') || t.includes('paraguai')) {
-        valorCalculado = 80;
-        estimativaDetalhe = langTxt.rotaPonte;
       } else if (t.includes('morumbi') || t.includes('conjunto c') || t.includes('bubas')) {
         valorCalculado = 80;
         estimativaDetalhe = langTxt.rotaMorumbi;
@@ -1453,21 +1453,19 @@
       calcularEstimativaPorEndereco();
       const t = I18N[currentLang];
       const nome = document.getElementById('nome').value.trim() || t.defaultPassenger;
-      const enderecoFinal = document.getElementById('endereco').value.trim() || t.defaultAddress;
+      const enderecoDigitado = document.getElementById('endereco').value.trim();
+      const enderecoFinal = enderecoDigitado || t.defaultAddress;
       const telefone = '5545988124101';
-      const textoPax = paxSelecionado === 1 ? t.paxSingular : t.paxPlural(paxSelecionado);
-      const textoPay = pagamentoKey === 'pix' ? t.payPix : t.payCash;
 
-      const texto = `${t.wppHeader}\n\n` +
-                    `• *${t.wppCar}:* ${CAR_INFO[currentLang]}\n` +
+      const alvoWaze = enderecoDigitado || localAtualTexto;
+      const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent(`${alvoWaze}, Foz do Iguacu, PR`)}&navigate=yes`;
+
+      const texto = `${t.wppHeader}\n` +
                     `• *${t.wppName}:* ${nome}\n` +
-                    `• *${t.wppOrigin}:* ${localAtualTexto}\n` +
-                    `• *${t.wppAddress}:* ${enderecoFinal}\n` +
                     `• *${t.wppDeparture}:* *${horaSaidaEstimada}*\n` +
-                    `• *${t.wppEstimate}:* ${estimativaDetalhe}\n` +
-                    `• *${t.wppPax}:* ${textoPax} (máx. 4)\n` +
-                    `• *${t.wppPay}:* ${textoPay}\n` +
-                    `• *${t.wppPrice}:* R$ ${valorCalculado},00`;
+                    `• *${t.wppAddress}:* ${enderecoFinal}\n` +
+                    `• *${t.wppWaze}:* ${wazeUrl}\n` +
+                    `• *${t.wppPrice}:* *R$ ${valorCalculado},00*`;
 
       const url = `https://wa.me/${telefone}?text=${encodeURIComponent(texto)}`;
       window.open(url, '_blank');
